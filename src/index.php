@@ -17,5 +17,5 @@
         exit; 
     }
 
-    header('location: src/login.php'); 
+    header('location: login.php'); 
 ?>
