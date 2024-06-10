@@ -113,25 +113,6 @@ $message = '
 ]
 ';
 
-$message = '
-{
-    "type": "section",
-    "text": {
-        "type": "mrkdwn",
-        "text": "Deseja transferir este chat?"
-    },
-    "accessory": {
-        "type": "users_select",
-        "placeholder": {
-            "type": "plain_text",
-            "text": "Escolha um usuário",
-            "emoji": true
-        },
-        "action_id": "atribuir-chat"
-    }
-}
-';
-
 if ($m = $fn->enviarMensagem($message)) {
     echo json_encode($m);
 } else {
