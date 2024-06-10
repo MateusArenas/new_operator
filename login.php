@@ -68,8 +68,11 @@
             <div class="col-12 d-flex flex-column justify-content-center align-items-center">
 
                 
-                <form class="card w-100 mb-4" name="flogin" method="post" action="" style="max-width: 24rem;"
-                    
+                <form class="card w-100 mb-4" 
+                    style="max-width: 24rem;"
+                    name="flogin" 
+                    method="post" 
+                    action="action-login.php" 
                 >
                     <div class="card-header text-center">
                         <h3 class="fw-bold my-2"><i class="bi bi-gear-wide-connected"></i> Painel de Controle</h3>
@@ -114,14 +117,17 @@
                             </div>
                         </div>
                         <div class="form-floating mb-3">
-                            <input name="Login" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input name="email" type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
+                                value="mateusarenas97@gmail.com"
+                            >
                             <label for="floatingInput">Usuario:</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input name="Senha" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                            <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                                value="operador12345"
+                            >
                             <label for="floatingPassword">Senha:</label>
                         </div>
-                        
 
                         
                         <button href="index_oauth.php?autostart=1&redirect=<?php echo urlencode(base64_encode($redirect)); ?>&base64=1" 

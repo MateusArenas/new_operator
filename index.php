@@ -13,7 +13,7 @@
 
     if(isset($_SESSION['MSLogin'])){ 
         if($redirect) header("location:{$redirect}"); 
-        else header('location:dashboard.php?Pagina=RelatorioDiario'); 
+        else header('location:dashboard2.php?Pagina=RelatorioDiario'); 
         exit; 
     }
 

@@ -14,8 +14,9 @@ class Functions
     public function enviarMensagem($mensagem)
     {
         $curl = curl_init();
+
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://slack.com/api/chat.postMessage?channel=C02A00NJF6C&blocks='.urlencode($mensagem),
+            CURLOPT_URL => 'https://slack.com/api/chat.postMessage?channel=C077SAM4XTK',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -23,18 +24,13 @@ class Functions
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode(
-                array(
-                    'channel' => $this->channel,
-                    'blocks' => $mensagem,
-                    'link_names' => '1'
-                )
-            ),
+            CURLOPT_POSTFIELDS => array('link_names' => '1','blocks' => $mensagem),
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json',
-                'Authorization: Bearer $this->api_authorization'
+                'Authorization: Bearer xoxb-7251242262146-7264333439425-HUbQyKF6JYL8EKMkZBKPzMYo'
             ),
         ));
+
         $response = curl_exec($curl);
         curl_close($curl);
         $response = json_decode($response);
