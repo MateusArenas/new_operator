@@ -1,0 +1,45 @@
+OK 1 - arrumar a parte dos filtros de acordo com o que já é usado atualmente
+OK 1.4 - deixar os paramentos acima da url serem auto setado nos filtros
+OK 1.8 - retirar busca por codigo da cosnulta (deixar somente por paramentro).
+OK 1.6 - abrir a consulta (fazer a parte do link do resultado da consulta)
+OK 6 - abertura do cliente ao clicar(informações)
+OK 6.7 - ao clicar em uma linha e abrir o modal deixar a linha marcada.
+
+6.5 - Editar Cliente (Perguntar se Está Habilitado)
+
+OK 2 - por todos os campos certinho nas linhas da tabela
+OK 3 - em rt (por a camera que abre as fotos e tals)
+
+6 - fazer a parte de atualizar(sim)
+7 - opções de alterar consulta e abrir chamado
+
+8 - navegar entre paginas
+
+OK 9 - login com google
+OK 10 - arrumar a intergração com a parte logada.
+
+11 - deixar seguro, quando acabar a sessao não dar mais para mexer nas coisas da area logada.
+
+12 - Ações de solicitar alterações está concluido, mas falta trocar os links de redirect e abrir consulta.
+
+13 - fazer o do xml de editar consulta editar_alterar.php
+14 - arrumar o sim deixar igula do operador porque...
+
+15 - arrumar a tela de clinete e navegaçao nas outras que n seja a rows, pois está faltando o parametro certo.
+
+16 - abrir foto ao clicar em foto do laudo em um modal.
+
+
+
+## TAREFAS
+
+1 - trocar todas as imagens dos atendentes para src: $atendente->ImagemAtendente
+2 - implementar o linking em tudo.
+3 - arrumar as permissoes de cada coisa.
+
+
+4 - arrumar cessão
+5 - arrumar requests deixar tudo com ação.
+6 - arrumar permissoes.
+7 - deslogar automatico.
+

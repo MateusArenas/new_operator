@@ -1,0 +1,100 @@
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+html {
+  height: -webkit-fill-available;
+}
+
+main {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 100vh;
+  height: -webkit-fill-available;
+  max-height: 100vh;
+}
+
+/* .bi {
+  vertical-align: -.125em;
+  pointer-events: none;
+  fill: currentColor;
+} */
+
+.dropdown-toggle { outline: 0; }
+
+.nav-flush .nav-link {
+  border-radius: 0;
+}
+
+.btn-toggle {
+  display: inline-flex;
+  align-items: center;
+  padding: .25rem .5rem;
+  background-color: transparent;
+  border: 0;
+  font-weight: 500;
+}
+
+.btn-toggle:hover,
+.btn-toggle:focus {
+  background-color: rgba(200, 200, 200, .15);
+}
+
+.btn-toggle.active {
+  /* background-color: rgba(200, 200, 200, .2);
+  --bs-text-opacity: 1;
+  color: rgba(var(--bs-primary-rgb), var(--bs-text-opacity)) !important; */
+}
+
+.btn-toggle::before {
+  width: 1.25em;
+  line-height: 1;
+  content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+  transition: transform .35s ease;
+  transform-origin: .5em 30%;
+  opacity: .5;
+}
+
+
+[data-bs-theme="dark"] .btn-toggle::before {
+  content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+}
+
+.btn-toggle[aria-expanded="true"] {
+}
+.btn-toggle[aria-expanded="true"]::before {
+  transform: rotate(90deg);
+}
+
+.btn-toggle-nav a {
+  display: inline-flex;
+  /* padding: .1875rem .5rem; */
+  /* margin-top: .165rem; */
+  /* margin-left: 1.65rem; */
+  text-decoration: none;
+}
+
+.btn-toggle-nav a {
+  --bs-text-opacity: 1;
+  color: rgba(var(--bs-dark-rgb), var(--bs-text-opacity)) !important;
+  opacity: .8;
+}
+
+[data-bs-theme="dark"] .btn-toggle-nav a {
+  --bs-text-opacity: 1;
+  color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
+}
+
+.btn-toggle-nav a:hover,
+.btn-toggle-nav a:focus {
+  background-color: rgba(200, 200, 200, .2);
+}
+
+.btn-toggle-nav .active a {
+  color: var(--bs-nav-pills-link-active-color) !important;
+  background-color: var(--bs-nav-pills-link-active-bg);
+  opacity: 1;
+}
+
+
