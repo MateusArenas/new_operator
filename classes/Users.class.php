@@ -9,9 +9,16 @@ class Users
         $this->db = new Database();
     }
 
-    function register ($nome, $email, $password, $slack_id) {
+    function tipos() {
+        $tipos = array();
+        $tipos[1] = 'Cliente';
+        $tipos[2] = 'Colaborador';
+        return $tipos;
+    }
+
+    function register ($nome, $email, $password, $type, $cpf, $slack_id = '') {
         try {
-            $this->db->query = "INSERT INTO users (nome, email, password, slack_id) VALUES (?, ?, ?, ?)";
+            $this->db->query = "INSERT INTO users (nome, email, password, type, cpf, slack_id) VALUES (?, ?, ?, ?, ?, ?)";
 
             $hash = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
@@ -19,6 +26,8 @@ class Users
             $this->db->content[] = array($nome);
             $this->db->content[] = array($email);
             $this->db->content[] = array($hash);
+            $this->db->content[] = array($type);
+            $this->db->content[] = array($cpf);
             $this->db->content[] = array($slack_id);
 
            return  $this->db->insert();

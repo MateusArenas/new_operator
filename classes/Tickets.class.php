@@ -12,6 +12,7 @@ class Tickets
     
     function motivos() {
         $motivos = array();
+        $motivos[0] = 'Outros';
         $motivos[1] = 'Erro de página não encontrada (404)';
         $motivos[2] = 'Problema de autenticação ou login';
         $motivos[3] = 'Erro de validação de formulário';

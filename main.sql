@@ -1,6 +1,8 @@
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) NOT NULL,
+    type INTEGER DEFAULT 1,
     slack_id VARCHAR(50),
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -12,13 +14,17 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS tickets (
     id SERIAL PRIMARY KEY,
-    reason VARCHAR(255) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    reason INTEGER NOT NULL,
     description TEXT,
+    status INTEGER DEFAULT 1,
     channel_id VARCHAR(50),
     user_id INTEGER,
+    operator_id INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (operator_id) REFERENCES users(id)
 );
 
 INSERT INTO users (nome, email, password, slack_id) 

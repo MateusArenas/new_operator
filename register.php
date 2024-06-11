@@ -1,5 +1,12 @@
 <?php
     session_start();
+    
+    @include_once('./classes/Database.class.php');
+    @include_once('./classes/Users.class.php');
+
+    $usersRepository = new Users();
+
+	$tipos = $usersRepository->tipos();
 
 ?>
 <!DOCTYPE html>
@@ -41,7 +48,7 @@
                     style="max-width: 24rem;"
                     name="flogin" 
                     method="post" 
-                    action="action-login.php" 
+                    action="action-register.php" 
                 >
                     <div class="card-header text-center">
                         <h3 class="fw-bold my-2"><i class="bi bi-gear-wide-connected"></i> Painel de Controle</h3>
@@ -92,10 +99,40 @@
                             <label for="floatingInput">Email:</label>
                         </div>
                         <div class="form-floating mb-3">
+                            <input name="name" type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
+                                value="mateusarenas97@gmail.com"
+                            >
+                            <label for="floatingInput">Nome:</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input name="cpf" type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
+                                value="49922171848"
+                            >
+                            <label for="floatingInput">CPF:</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select class="form-select form-select-sm" 
+                                name="type"
+                                required
+                            >
+                            <option value="">Selecione</option>
+                            <?php foreach($tipos as $value => $item): ?>
+                                <option value="<?=$value?>"><?="{$value} - {$item}"?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <label class="form-label">Motivo</label>
+                        </div>
+                        <div class="form-floating mb-3">
                             <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password"
                                 value="operador12345"
                             >
                             <label for="floatingPassword">Senha:</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input name="confirmpass" type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                                value="operador12345"
+                            >
+                            <label for="floatingPassword">Corfirmar Senha:</label>
                         </div>
 
                         

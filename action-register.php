@@ -17,7 +17,23 @@ if (!$post->email || !$post->password) {
     die('Email\Senha não localizados.');
 }
 
-if ($user = $User->login($post->email, $post->password)) {
+if (!$post->cpf) {
+    die('CPF não localizados.');
+}
+
+if (!$post->name) {
+    die('Nome não localizados.');
+}
+
+if (!$post->type) {
+    die('Tipo não localizados.');
+}
+
+if ($post->password !== $post->confirmpass) {
+    die('Senha está diferente da Confirmação de senha.');
+}
+
+if ($user = $User->register($post->name, $post->email, $post->password, $post->type, $post->cpf)) {
     $_SESSION["MSLogin"] = $user->email;
     $_SESSION["MSNome"] = $user->nome;
     $_SESSION["MSId"] = $user->id;

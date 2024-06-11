@@ -20,7 +20,7 @@
          * @access private
          * @name $password
          */
-        private $password = '6Oo2xVuScGfP';
+        private $password = 'Nk9vMnhWdVNjR2ZQ';
 
         /**
          * Variável que contém nome do banco escolhido
@@ -81,6 +81,7 @@
         public function __construct($debug = true)
         {
             $this->debug = $debug;
+            $this->password = base64_decode($this->password);
         }
 
         /**
