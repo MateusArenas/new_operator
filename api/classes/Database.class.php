@@ -98,7 +98,7 @@
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_PERSISTENT => false
                 );
-                $conn = new PDO("pgsql:host={$this->host};port=5432;dbname={$this->base};sslmode=require;options='endpoint=ep-solitary-lab-a4xsr6zv'", $this->user, $this->password, $config);
+                $conn = new PDO("pgsql:host={$this->host};port=5432;dbname={$this->base};sslmode=require", $this->user, $this->password, $config);
                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $this->instance = $conn;
             }
