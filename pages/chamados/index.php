@@ -171,21 +171,26 @@ $chamados = $ticketsRepository->findAll($offset, $itensPorPagina);
 
                             <!-- OPERADOR START -->
                             <td scope="row">
-                                <div class="d-flex align-items-center gap-2">
                                   <?php if (@$chamado->operator_id) : ?>
-                                    <img class="bg-light rounded"
-                                        alt="" width="28" height="28" 
-                                        src="<?= $chamado->operator_image_url ?>" 
-                                        data-srcset="<?=$baseURL?>/profile_image.php?fullname=<?= $chamado->operator_name ?>" 
-                                        onerror="defaultImage(this)"
-                                    />
+                                    <a class="d-flex align-items-center gap-2 link-underline-secondary link-underline-opacity-0 link-underline-opacity-100-hover"
+                                        data-bs-open="modal"
+                                        href="?user=<?= $row->user_id ?>"
+                                        data-bs-modaltype="modal-fullscreen-md-down"
+                                        style="color: unset;"
+                                    >
+                                        <img class="bg-light rounded"
+                                            alt="" width="28" height="28" 
+                                            src="<?= $chamado->operator_image_url ?>" 
+                                            data-srcset="<?=$baseURL?>/profile_image.php?fullname=<?= $chamado->operator_name ?>" 
+                                            onerror="defaultImage(this)"
+                                        />
 
-                                    <small class="fw-semibold text-nowrap">
-                                        <?= $chamado->operator_name ?>
-                                    </small>
+                                        <small class="fw-semibold text-nowrap">
+                                            <?= $chamado->operator_name ?>
+                                        </small>
+                                    </a>
                                   <?php else: ?>
                                   <?php endif; ?>
-                                </div>
                             </td>
                             <!-- OPERADOR END -->
 

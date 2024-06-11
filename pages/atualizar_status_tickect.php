@@ -50,8 +50,7 @@
 
           <div class="form-floating mb-3">
               <select class="form-select form-select-sm" 
-                  name="status"
-                  required
+                  name="status" required
               >
                   <?php foreach($status as $value => $item): ?>
                     <option value="<?=$value?>"  <?php if($ticket->status == $value) echo 'selected'; ?>   ><?="{$item}"?></option>
