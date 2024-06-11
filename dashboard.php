@@ -345,22 +345,37 @@
                     docSearchInputEl.focus();
                   });
 
-                  const data = [
-                    { 
-                      name: 'Lista de Atendentes', 
-                      section: 'Painel Administrativo',
-                      description: 'Todos os atendentes e suas informações como: Horários de trabalho, Último Acesso,Bloqueio Automático e status e situação.', 
-                      keywords: ['lista de atendentes', 'atendentes', 'operadores', 'usuarios', 'usuários', 'todos os usuarios', 'Horários de trabalho'],
-                      link: '<?= $baseURL?>/dashboard/lista_atendentes'
-                    },
-                    { 
-                      name: 'Abrir de Chamado', 
-                      section: 'Painel de Controle',
-                      description: 'Abrir Chamado e Histórico de abertura de chamados', 
-                      keywords: ['abrir de chamado', 'abertura de chamdo', 'histórico de chamado', 'histórico', 'chamados'],
-                      link: '<?= $baseURL?>/dashboard/remover_leilao'
-                    },
-                  ];
+
+                    <?php if(@$_SESSION["MSPermission"] == 2): ?>
+                      var data = [
+                        { 
+                          name: 'Lista de Chamados', 
+                          section: 'Painel Administrativo',
+                          description: 'Todos os chamados e suas informações como: Status, Descrição e motivo.', 
+                          keywords: ['lista de chamados', 'chamados', 'abertos', 'fechados', 'tickets', 'historico'],
+                          link: '<?= $baseURL?>/dashboard/chamados'
+                        },
+                        { 
+                          name: 'Lista de Atendentes', 
+                          section: 'Painel Administrativo',
+                          description: 'Todos os atendentes e suas informações como: Horários de trabalho, Último Acesso,Bloqueio Automático e status e situação.', 
+                          keywords: ['lista de atendentes', 'atendentes', 'operadores', 'usuarios', 'usuários', 'todos os usuarios', 'Horários de trabalho'],
+                          link: '<?= $baseURL?>/dashboard/lista_atendentes'
+                        },
+                        
+                      ];
+                    <?php elseif (@$_SESSION["MSPermission"] == 1): ?>
+                      var data = [
+                        { 
+                          name: 'Abrir de Chamado', 
+                          section: 'Painel de Controle',
+                          description: 'Abrir Chamado e Histórico de abertura de chamados', 
+                          keywords: ['abrir de chamado', 'abertura de chamdo', 'histórico de chamado', 'histórico', 'chamados'],
+                          link: '<?= $baseURL?>/dashboard/realizar_chamado'
+                        },
+                      ];
+                    <?php endif; ?>
+
 
                   listarOperadores().then(response => {
                     if (response.operadores) {

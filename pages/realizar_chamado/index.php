@@ -42,7 +42,7 @@
                                 <div class="form-floating mb-3">
                                     <input name="title" type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
                                     >
-                                    <label for="floatingInput">Titulo:</label>
+                                    <label for="floatingInput">Título</label>
                                 </div>
                             </div>
     

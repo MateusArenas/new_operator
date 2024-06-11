@@ -87,7 +87,7 @@
                         </div>
                         <div class="form-floating mb-3">
                             <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
-                                value="mateusarenas97@gmail.com"
+                                value="teste@gmail.com"
                             >
                             <label for="floatingInput">Email:</label>
                         </div>

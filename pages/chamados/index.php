@@ -184,9 +184,6 @@ $chamados = $ticketsRepository->findAll($offset, $itensPorPagina);
                                         <?= $chamado->operator_name ?>
                                     </small>
                                   <?php else: ?>
-                                      <a href="http://" target="_blank" rel="noopener noreferrer">
-                                        Verificar
-                                      </a>
                                   <?php endif; ?>
                                 </div>
                             </td>
