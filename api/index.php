@@ -50,6 +50,14 @@
                     }
 
                     break;
+                case 'user':
+                    if ($user = $Users->findById($request->user_id)) {
+                        $response->user = $user;
+                    } else {
+                        throw new Exception("Não foi possível obter usuário.");
+                    }
+
+                    break;
                 case 'sign-up':
                     if ($user_id = $Users->register($post->name, $post->email, $post->password, $post->type, $post->cpf)) {
                         $user = $Users->findById($user_id);
@@ -70,7 +78,7 @@
 
                     break;
                 case 'logout':
-                    if ($Users->logout($post->user_id)) {
+                    if ($Users->logout($request->user_id)) {
                         $response->success = true;
                     } else {
                         throw new Exception("Não foi possível logar.");
@@ -82,6 +90,48 @@
                         $response->operadores = $operadores;
                     } else {
                         throw new Exception("Não foi possível listar operadores.");
+                    }
+
+                    break;
+                case 'create-ticket':
+                    if ($ticket_id = $Tickets->create($post->title, $post->reason, $post->description, $post->channel_id, $post->user_id)) {
+                        $ticket = $Tickets->findById($ticket_id);
+
+                        $response->ticket = $ticket;
+                    } else {
+                        throw new Exception("Não foi criar ticket.");
+                    }
+
+                    break;
+                case 'update-status-ticket':
+                    if ($ticket_id = $Tickets->updateStatus($post->ticket_id, $post->operator_id, $post->status)) {
+                        $response->success = true;
+                    } else {
+                        throw new Exception("Não foi possivel mudar o status do ticket.");
+                    }
+
+                    break;
+                case 'tickets-count':
+                    if (($count = $Tickets->countAll() !== null)) {
+                        $response->count = $count;
+                    } else {
+                        throw new Exception("Não foi possivel obter tickets.");
+                    }
+
+                    break;
+                case 'tickets':
+                    if ($tickets = $Tickets->findAll($post->offset, $post->limit)) {
+                        $response->tickets = $tickets;
+                    } else {
+                        throw new Exception("Não foi possivel obter tickets.");
+                    }
+
+                    break;
+                case 'ticket':
+                    if ($ticket = $Tickets->findById($post->ticket_id)) {
+                        $response->ticket = $ticket;
+                    } else {
+                        throw new Exception("Não foi possivel obter ticket.");
                     }
 
                     break;
