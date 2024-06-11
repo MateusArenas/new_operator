@@ -13,7 +13,7 @@
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => json_encode( array(
-                    'channel' => $channel_id,
+                    'channel' => $timestam,
                     'ts' => $timestamp,
                     'text' => $mensagem
                 )

@@ -6,17 +6,12 @@ date_default_timezone_set('America/Sao_Paulo');
 
 @include_once('../config.php');
 @include_once('../classes/Database.class.php');
+@include_once('../classes/Users.class.php');
 
 $db = new Database();
+$usersRepository = new Users();
 
-$db->query = "SELECT * FROM credauto.atendentes WHERE CodAtendente != 0 AND Situacao != 2 ORDER BY LoginAtendente";
-$db->content = array();
-$atendentes = $db->select();
-
-if ($_SESSION["MSPermissoes"] != "9") {
-    echo 'Sem permissão.';
-    exit;
-}
+$atendentes = $usersRepository->findAll();
 
 ?>
 
@@ -81,24 +76,24 @@ if ($_SESSION["MSPermissoes"] != "9") {
 
                     <?php foreach ($atendentes as $atendente) : 
 
-                        $atendente_imagem = $atendente->ImagemAtendente;
-                        $atendente_nome = ucwords($atendente->NomeNovoAtendente ?: $atendente->NomeAtendente);
+                        $atendente_imagem = $atendente->image_url;
+                        $atendente_nome = ucwords($atendente->nome);
 
-                        $bloqueio_auto = $atendente->status == "1" ? 'Sim': 'Não';
+                        $bloqueio_auto = @$atendente->status == "1" ? 'Sim': 'Não';
 
-                        $atendente_status = $atendente->acesso == "0" ? 
+                        $atendente_status = @$atendente->acesso != "0" ? 
                         '<span class="fw-semibold text-success">Ativo</span>' 
                         : '<span class="fw-semibold text-danger">Inativo</span>'; 
                         
                         // Último acesso
-                        $data_formatada = strftime('%e de %B de %Y',  strtotime($atendente->Data));
+                        $data_formatada = strftime('%e de %B de %Y',  strtotime($atendente->created_at));
                         // Formatação da hora
-                        $hora_formatada = date('H:i', strtotime(trim($atendente->Hora)));
+                        $hora_formatada = date('H:i', strtotime(trim($atendente->created_at)));
 
                         $ultima_acesso_formatada = "$data_formatada às $hora_formatada";
                         // fim
 
-                        if ($atendente->horaentrada && $atendente->horasaida) 
+                        if (@$atendente->horaentrada && @$atendente->horasaida) 
                         {
                           // Horário de início e término
                           $inicio = DateTime::createFromFormat('H:i:s', $atendente->horaentrada);
@@ -126,7 +121,7 @@ if ($_SESSION["MSPermissoes"] != "9") {
                         <tr role="button" class="table-row-fomidable to-hover px-4"
                             data-bs-useclass="table-active"
                             data-bs-open="modal"
-                            href="?user=<?= $atendente->CodAtendente ?>"
+                            href="?user=<?= $atendente->id ?>"
                             data-bs-modaltype="modal-fullscreen-md-down"
                         >
                             <!-- Nome -->
@@ -136,7 +131,6 @@ if ($_SESSION["MSPermissoes"] != "9") {
                                     src="<?= $atendente_imagem ?>" 
                                     data-srcset="<?=$baseURL?>/profile_image.php?fullname=<?= $atendente_nome ?>" 
                                     onerror="defaultImage(this)"
-                                    <?php if(@$atendente->acesso != "0") echo 'disabled' ?>
                                 />
                                 <small class="fw-semibold text-nowrap">
                                     <?= $atendente_nome ?>

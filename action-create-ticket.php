@@ -3,10 +3,12 @@
 @include_once('./config.php');
 require('./classes/Database.class.php');
 require('./classes/Users.class.php');
+require('./classes/Tickets.class.php');
 require('./classes/Functions.class.php');
 
 $fn = new Functions();
 $usrs = new Users();
+$ticketsRepository = new Tickets();
 
 $user_id = @$_SESSION["MSId"];
 
@@ -49,9 +51,16 @@ $message = '
         }
     },
     {
+        "type": "section",
+        "text": {
+            "type": "mrkdwn",
+            "text": "*Status:*\n'."<http://www.credoperador.com.br|Verificando>".'"
+        }
+    },
+    {
         "type": "actions",
         "block_id": "chamado-generico",
-        "elements": [
+        "elements": [            
             {
                 "type": "button",
                 "action_id": "chamado-generico-verificando",
@@ -70,7 +79,7 @@ $message = '
                     },
                     "confirm": {
                         "type": "plain_text",
-                        "text": "Sim"
+                        "text": "Sim",
                     },
                     "deny": {
                         "type": "plain_text",
@@ -112,11 +121,47 @@ $message = '
     }
 ]
 ';
+$response = new stdClass();
 
-if ($m = $fn->enviarMensagem($message)) {
-    echo json_encode($m);
-} else {
-    echo 'Não foi possivel enviar mensagem';
+try {
+    if ($ticket = $ticketsRepository->create($reason, $description, "C077SAM4XTK", $user->id)) {
+        $response->success = "Chamado aberto.";
+    } else {
+        throw new Exception('Não foi possivel abrir chamado.    ');
+    }
+} catch (\Throwable $th) {
+    $response->error = $th->getMessage();
 }
 
+
+// if ($m = $fn->enviarMensagem($message)) {
+//     echo json_encode($m);
+// } else {
+//     echo 'Não foi possivel enviar mensagem';
+// }
+
 ?>
+
+<?php if (@$response->success): ?>
+        
+    <div class="alert alert-success" role="alert">
+        <?= $response->success ?>
+        <div class="mt-2">
+            <small class="text-muted">
+                Para visualizar o chamado que foi aberto no histórico, por favor, <a href="#" onclick="location.reload()">recarregue a página</a> 
+                ou clique no botão <code><i class="bi bi-arrow-clockwise"></i></code> em 
+                <code><i class="bi bi-clock-history"></i> Histórico de Chamados</code>.
+            </small>
+        </div>
+    </div>
+
+
+<?php else: ?>
+
+    <?php if (@$response->error): ?>
+        <div class="alert alert-warning" role="alert">
+            <?= $response->error ?>
+        </div>
+    <?php endif; ?>
+
+<?php endif; ?>

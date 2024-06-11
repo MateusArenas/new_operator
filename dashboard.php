@@ -8,43 +8,27 @@
 
     // redireciona para rota inicial automaticamente (url amigável)
     if (!@$_GET['page']) { 
-      $_GET['page'] = "consultas_veiculares";
+      $_GET['page'] = "realizar_chamado";
     }
 
     require_once('./classes/Helpers.class.php');
     require_once('./classes/Database.class.php');
     // tem que incluir devido as telas.
-    require_once('./classes/Leilao.class.php');
-    require_once('./classes/Consulta.class.php');
-    require_once('./classes/Obito.class.php');
-    require_once('./classes/Farol.class.php');
-    require_once('./classes/AcaoTrabalhista.class.php');
-    require_once('./classes/HistoricoRF.class.php');
-    require_once('./classes/Recall.class.php');
-    require_once('./classes/Seguro.class.php');
-
     require_once('./classes/Functions.class.php');
-    require_once('./classes/Chamado.class.php');
+    require_once('./classes/Tickets.class.php');
+    require_once('./classes/Users.class.php');
 
     $db = new Database();
 
 
     $menus = [
-      "buscar_consultas" => [
-        "title" => 'Buscar Consultas',
+      "painel_controle" => [
+        "title" => 'Painel de Controle',
         "submenus" => [
-          'consultas_veiculares' => [
-            "title" => 'Consultas Veiculares',
-            "link" => $baseURL . '/dashboard/consultas_veiculares'
-          ],
-          'consultas_credito' => [
-            "title" => 'Consultas Crédito',
-            "link" => $baseURL . '/dashboard/consultas_credito'
-          ],
-          'consultas_webservice' => [
-            "title" => 'Consultas WebServer',
-            "link" => $baseURL . '/dashboard/consultas_webservice'
-          ],
+            "realizar_chamado" => [
+              "title" => 'Abrir Chamado',
+              "link" => $baseURL . '/dashboard/realizar_chamado',
+            ]
         ]
       ],
 
@@ -54,75 +38,10 @@
             "lista_atendentes" => [
               "title" => 'Lista de Atendentes',
               "link" => $baseURL . '/dashboard/lista_atendentes',
-              "hide" => $_SESSION["MSPermissoes"] != "9"
             ]
         ]
       ],
 
-      "painel_controle" => [
-        "title" => 'Painel de Controle',
-        "submenus" => [
-          'remover_leilao' => [
-            "title" => 'Remoção de Leilão',
-            "link" => $baseURL . '/dashboard/remover_leilao'
-          ],
-          'remover_consulta' => [
-            "title" => 'Remoção de Consulta',
-            "link" => $baseURL . '/dashboard/remover_consulta'
-          ],
-          'remover_obito' => [
-            "title" => 'Remoção de Óbito',
-            "link" => $baseURL . '/dashboard/remover_obito'
-          ],
-          'alterar_farol' => [
-            "title" => 'Atualização de Farol',
-            "link" => $baseURL . '/dashboard/alterar_farol'
-          ],
-          'atualizar_acao' => [
-            "title" => 'Atualizar Ação Trabalhista',
-            "link" => $baseURL . '/dashboard/atualizar_acao'
-          ],
-          'atualizar_recall' => [
-            "title" => 'Atualizar Recall',
-            "link" => $baseURL . '/dashboard/atualizar_recall'
-          ],
-          'atualizar_rf' => [
-            "title" => 'Atualizar Histórico RF',
-            "link" => $baseURL . '/dashboard/atualizar_rf'
-          ],
-          'atualizar_seguro' => [
-            "title" => 'Atualizar Cotação de Seguro',
-            "link" => $baseURL . '/dashboard/atualizar_seguro'
-          ],
-          'robo_operador' => [
-            "title" => 'ATPV / CRLV',
-            "link" => $baseURL . '/dashboard/robo_operador'
-          ],
-          'segvia' => [
-            "title" => '2ª Via',
-            "link" => $baseURL . '/dashboard/segvia'
-          ]
-        ]
-      ],
-
-      "painel_chamados" => [
-        "title" => 'Chamados',
-        "submenus" => [
-            "whatsapp" => [
-              "title" => 'Whatsapp',
-              "link" => 'https://www.credoperador.com.br/positus_docking.php',
-              "target" => '_blank'
-            ],
-            "chamados" => [
-              "title" => 'Contestações',
-              "link" => $baseURL . '/dashboard/chamados',
-            ],
-            "cliente_sem_contato" => [
-              "title" => 'Contato Cliente',
-              "link" => $baseURL . '/dashboard/cliente_sem_contato',
-            ],
-        ]
-      ],
     ];
 
 
@@ -212,7 +131,7 @@
             <button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 
             <a href="./" class="text-decoration-none mx-2">
-                <span class="fs-5 fw-bold">CredOperador</span>
+                <span class="fs-5 fw-bold">Operador</span>
             </a>
         </div>
 
@@ -412,27 +331,6 @@
 
                   const data = [
                     { 
-                      name: 'Consultas Veiculares', 
-                      section: 'Buscar Consultas',
-                      description: 'Localize consultas veiculares para obter informações precisas, e realize ações como, abrir um chamado, alterar uma consulta.', 
-                      keywords: ['consultas veiculares', 'veiculos', 'buscar', 'por placa', 'consultas', 'buscar consultas','localizar'],
-                      link: '<?= $baseURL?>/dashboard/consultas_veiculares'
-                    },
-                    { 
-                      name: 'Consultas Crédito', 
-                      section: 'Buscar Consultas',
-                      description: 'Localize consultas de crédito para obter informações precisas, e realize ações como, abrir um chamado, alterar uma consulta.', 
-                      keywords: ['consultas crédito', 'consultas credito', 'credito', 'crédito', 'buscar', 'por documento', 'consultas', 'buscar consultas', 'localizar'],
-                      link: '<?= $baseURL?>/dashboard/consultas_credito'
-                    },
-                    { 
-                      name: 'Consultas WebServer', 
-                      section: 'Buscar Consultas',
-                      description: 'Localize consultas webserver para obter informações precisas.', 
-                      keywords: ['consultas webserver', 'webserver', 'buscar', 'por placa', 'consultas', 'buscar consultas', 'localizar'],
-                      link: '<?= $baseURL?>/dashboard/consultas_webservice'
-                    },
-                    { 
                       name: 'Lista de Atendentes', 
                       section: 'Painel Administrativo',
                       description: 'Todos os atendentes e suas informações como: Horários de trabalho, Último Acesso,Bloqueio Automático e status e situação.', 
@@ -440,98 +338,35 @@
                       link: '<?= $baseURL?>/dashboard/lista_atendentes'
                     },
                     { 
-                      name: 'Remoção de Leilão', 
+                      name: 'Abrir de Chamado', 
                       section: 'Painel de Controle',
-                      description: 'Remoção de leilão e Histórico de Remoções de leilão', 
-                      keywords: ['remoção de leilão', 'remover leilão', 'histórico de leilão', 'histórico'],
+                      description: 'Abrir Chamado e Histórico de abertura de chamados', 
+                      keywords: ['abrir de chamado', 'abertura de chamdo', 'histórico de chamado', 'histórico', 'chamados'],
                       link: '<?= $baseURL?>/dashboard/remover_leilao'
-                    },
-                    { 
-                      name: 'Remoção de Consulta', 
-                      section: 'Painel de Controle',
-                      description: 'Remoção de consulta e Histórico de Remoções de consultas', 
-                      keywords: ['remoção de consultas', 'remover consultas', 'consultas', 'histórico de consultas', 'histórico'],
-                      link: '<?= $baseURL?>/dashboard/remover_consulta'
-                    },
-                    { 
-                      name: 'Remoção de Óbito', 
-                      section: 'Painel de Controle',
-                      description: 'Remoção de consulta e Histórico de Remoções de consultas', 
-                      keywords: ['remoção de óbito ', 'remover óbito', 'histórico de óbito', 'histórico', 'historico'],
-                      link: '<?= $baseURL?>/dashboard/remover_obito'
-                    },
-                    { 
-                      name: 'Atualização de Farol', 
-                      section: 'Painel de Controle',
-                      description: 'Atualização de farol da consulta e Histórico de Atualização de farol', 
-                      keywords: ['atualização de farol ', 'atualizar farol', 'farol', 'histórico de farol', 'histórico'],
-                      link: '<?= $baseURL?>/dashboard/alterar_farol'
-                    },
-                    { 
-                      name: 'Atualizar Ação Trabalhista', 
-                      section: 'Painel de Controle',
-                      description: 'Atualização de ação trabalhista da consulta e Histórico de Atualização de ação trabalhista', 
-                      keywords: ['atualização de ação trabalhista ', 'atualizar ação trabalhista', 'ação trabalhista', 'histórico de ação trabalhista', 'histórico'],
-                      link: '<?= $baseURL?>/dashboard/atualizar_acao'
-                    },
-                    { 
-                      name: 'Atualizar Recall', 
-                      section: 'Painel de Controle',
-                      description: 'Atualização de recall da consulta e Histórico de Atualização de recall', 
-                      keywords: ['atualização de recall', 'atualizar recall', 'recall', 'histórico de recall', 'histórico'],
-                      link: '<?= $baseURL?>/dashboard/atualizar_recall'
-                    },
-                    { 
-                      name: 'Atualizar Histórico RF', 
-                      section: 'Painel de Controle',
-                      description: 'Atualização de Histórico RF da consulta e Histórico de Histórico RF', 
-                      keywords: ['atualização de histórico rf', 'atualizar histórico rf', 'histórico rf', 'histórico de histórico rf', 'histórico'],
-                      link: '<?= $baseURL?>/dashboard/atualizar_rf'
-                    },
-                    { 
-                      name: 'Atualizar Cotação de Seguro', 
-                      section: 'Painel de Controle',
-                      description: 'Atualização de Cotação de Seguro da consulta e Histórico de Cotação de Seguro', 
-                      keywords: ['atualização de Cotação de Seguro', 'atualizar Cotação de Seguro', 'Cotação de Seguro', 'histórico de Cotação de Seguro', 'histórico'],
-                      link: '<?= $baseURL?>/dashboard/atualizar_seguro'
-                    },
-                    { 
-                      name: 'ATPV / CRLV', 
-                      section: 'Painel de Controle',
-                      description: '', 
-                      keywords: ['ATPV / CRLV'],
-                      link: '<?= $baseURL?>/dashboard/robo_operador'
-                    },
-                    { 
-                      name: '2ª Via', 
-                      section: 'Painel de Controle',
-                      description: '', 
-                      keywords: ['2ª Via'],
-                      link: '<?= $baseURL?>/dashboard/segvia'
                     },
                   ];
 
                   listarOperadores().then(response => {
                     if (response.operadores) {
                       response.operadores.map(operador => {
+                        console.log({operador});
 
-                        var atendente_nome = operador?.NomeNovoAtendente ?? operador?.NomeAtendente;
+                        var atendente_nome = operador?.nome;
 
                         data.push({
                           avatar: `
                             <img class="bg-light rounded me-1"
                                 alt="" width="32" height="32" 
-                                src="${operador?.ImagemAtendente ?? ''}" 
+                                src="${operador?.image_url ?? ''}" 
                                 data-srcset="<?=$baseURL?>/profile_image.php?fullname=${atendente_nome}" 
                                 onerror="defaultImage(this)"
-                                ${operador.acesso != '0' ? 'disabled' : ''}
                             />
                           `,
                           section: 'Operadores',
                           name: atendente_nome, 
-                          description: operador?.LoginAtendente ?? '', 
+                          description: operador?.email ?? '', 
                           keywords: ['operador', 'usuario', 'atendente'],
-                          link: `?user=${operador?.CodAtendente}`
+                          link: `?user=${operador?.id}`
                         });
                       });
                     }
@@ -744,53 +579,14 @@
 
 
               switch (@$_GET['page']) {
-                  case 'consultas_veiculares':
-                      require_once('./pages/consultas_veiculares.page.php');
+                  case 'realizar_chamado':
+                      require_once('./pages/realizar_chamado/index.php');
                       break;
-                  case 'consultas_credito':
-                      require_once('./pages/consultas_credito.page.php');
-                    break;
-                  case 'consultas_webservice':
-                      require_once('./pages/consultas_webserver.page.php');
-                    break;
-                  case 'remover_leilao':
-                      require_once('./pages/remover_leilao/index.php');
-                    break;
-                  case 'remover_consulta':
-                      require_once('./pages/remover_consulta/index.php');
-                    break;
-                  case 'alterar_farol':
-                      require_once('./pages/alterar_farol/index.php');
-                    break;
-                  case 'atualizar_acao':
-                      require_once('./pages/atualizar_acao/index.php');
-                    break;
-                  case 'atualizar_recall':
-                      require_once('./pages/atualizar_recall/index.php');
-                    break;
-                  case 'atualizar_rf':
-                      require_once('./pages/atualizar_rf/index.php');
-                    break;
-                  case 'atualizar_seguro':
-                      require_once('./pages/atualizar_seguro/index.php');
-                    break;
-                  case 'remover_obito':
-                      require_once('./pages/remover_obito/index.php');
-                    break;
-                  case 'robo_operador':
-                      require_once('./pages/robo_operador.page.php');
-                    break;
-                  case 'segvia':
-                      require_once('./pages/segvia.page.php');
-                    break;
+                  // case 'consultas_veiculares':
+                  //     require_once('./pages/consultas_veiculares.page.php');
+                  //     break;
                   case 'lista_atendentes':
                       require_once('./pages/lista_atendentes.page.php');
-                    break;
-                  case 'chamados':
-                      require_once('./pages/chamados/chamados.page.php');
-                    break;
-                  case 'cliente_sem_contato':
-                      require_once('./pages/cliente_sem_contato/cliente_sem_contato.page.php');
                     break;
                   default:
                       break;
@@ -1619,10 +1415,6 @@
     "user": {
       params: ['user'],
       url: `<?= $baseURL ?>/pages/perfil_operador.page.php?operador={{user}}`,
-    },
-    "consulta": {
-      params: ['consulta', 'xml'],
-      url: `<?= $baseURL ?>/pages/opcoes_consulta.page.php?consulta={{consulta}}&xml={{xml}}`
     },
   };
 

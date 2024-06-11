@@ -4,17 +4,13 @@
     @include_once('../../config.php');
     @include_once('../../classes/Helpers.class.php');
     @include_once('../../classes/Database.class.php');
-    @include_once('../../classes/Farol.class.php');
+    @include_once('../../classes/Tickets.class.php');
+    @include_once('../../classes/Users.class.php');
 
-	$db = new Database();
-	$farolClass = new Farol();
-    
-    $db->query = "SELECT COUNT(*) as total 
-        FROM operador.tbl_altera_farol as f, credauto.consultas AS c
-        WHERE f.justificar <> '' AND c.Codigo = f.consulta
-    ";
+	$ticketsRepository = new Tickets();
+	$usersRepository = new Users();
 
-    $count = $db->selectOne();
+    $count = $ticketsRepository->countAll();
 
     // Recebendo o offset via GET
     $pagina = @$_GET['pagina'] ?? 1;
@@ -37,38 +33,27 @@
     // Quando realmente possue resgistros ele adiciona +1 na pagina.
     if ($totalPaginas > 0) $paginaAtual++;
 
-    $db->query = "SELECT f.id, f.consulta as cod_consulta, f.farol, f.date_remocao, f.date_remocao AS data, c.ValorItem AS parametro, t.tipoconsulta AS tipo, t.id AS tipo_consulta, c.ItemConsultado as tipo_parametro , f.justificar, 
-        a.NomeAtendente AS nome, a.slack_id, a.CodAtendente AS atendente, a.acesso AS atendente_acesso, a.ImagemAtendente AS ImagemAtendente
-        FROM operador.tbl_altera_farol AS f, consultas AS c, atendentes AS a, ttipoconsulta AS t 
-        WHERE a.CodAtendente = f.usuario AND c.Codigo = f.consulta AND t.codigo = c.TipoConsulta 
-        ORDER BY id DESC LIMIT ?, ?
-    ";
+	$rows = $ticketsRepository->findAll($offset, $itensPorPagina);
 
-    $db->content = [];
-    $db->content[] = [$offset, 'int'];
-    $db->content[] = [$itensPorPagina, 'int'];
-	$rows = $db->select();
+	$motivos = $ticketsRepository->motivos();
 
-	$motivos = $farolClass->motivos();
-
-	$farois = $farolClass->farois();
 ?>
 
 <main class="d-flex flex-column flex-fill h-100"
-    id="historico_leilao" 
+    id="historico_chamados" 
 >
     <form class="card d-flex flex-column h-100"
         data-form-type="ajax"
-        data-form-target="#historico_leilao"
+        data-form-target="#historico_chamados"
         data-form-replace="true"
-        action="<?=$baseURL?>/pages/alterar_farol/historico.php"
+        action="<?=$baseURL?>/pages/realizar_chamado/historico.php"
         method="get"
     >
     
         <div class="card-header d-flex flex-row align-items-center justify-content-between p-3 border-bottom">
     
             <h6 class="card-subtitle mb-0 text-muted" style="max-width: 18em;">
-                <i class="bi bi-clock-history me-1"></i> Histórico de Alterações
+                <i class="bi bi-clock-history me-1"></i> Histórico de Chamados
             </h6>
 
             <span 
@@ -79,7 +64,7 @@
                 data-bs-content="Recarregar"
             >
                 <button type="submit" class="btn btn-light btn-sm"
-                    formaction="<?=$baseURL?>/pages/alterar_farol/historico.php?pagina=<?= $paginaAtual ?>"
+                    formaction="<?=$baseURL?>/pages/realizar_chamado/historico.php?pagina=<?= $paginaAtual ?>"
                 >
                     <i class="bi bi-arrow-clockwise"></i>
                 </button>
@@ -99,7 +84,10 @@
 
             <?php
                 foreach ($rows as $key => $row): 
-                    $data = Helpers::formatarDataEscrita($row->date_remocao);
+
+                    $user = $row;
+
+                    $data = Helpers::formatarDataEscrita($row->created_at);
             ?>
                 <div class="list-group-item ">
     
@@ -112,10 +100,9 @@
                         >
                             <img class="bg-light rounded"
                                 alt="" width="32" height="32" 
-                                src="<?= @$row->ImagemAtendente ?>" 
-                                data-srcset="<?=$baseURL?>/profile_image.php?fullname=<?= ucwords($row->nome) ?>" 
+                                src="<?= @$user->image_url ?>" 
+                                data-srcset="<?=$baseURL?>/profile_image.php?fullname=<?= ucwords($user->nome) ?>" 
                                 onerror="defaultImage(this)"
-                                <?php if(@$row->atendente_acesso != "0") echo 'disabled' ?>
                             />
                         </a> 
     
@@ -126,29 +113,23 @@
                                     <span class="fw-semibold">
                                         <a class="fw-semibold link-underline-secondary link-underline-opacity-0 link-underline-opacity-100-hover"
                                             data-bs-open="modal"
-                                            href="?user=<?= $row->atendente ?>"
+                                            href="?user=<?= $user->id ?>"
                                             data-bs-modaltype="modal-fullscreen-md-down"
                                             style="color: unset;"
                                         >
-                                            <?= ucwords($row->nome) ?>
-                                        </a> atualizou o farol para <strong><?=$farois[$row->farol]?></strong>
-                                        <strong><?=strtoupper($row->tipo_parametro)?> <?=strtoupper($row->parametro)?></strong>
+                                            <?= ucwords($user->nome) ?>
+                                        </a> abriu chamado de <strong><?=$motivos[$row->reason]?></strong>
+                                        <!-- <strong><?=strtoupper(@$row->tipo_parametro)?> <?=strtoupper(@$row->parametro)?></strong> -->
                                     </span>
 
-                                    <small>
-                                        <a type="button" class="link-underline link-underline-opacity-0 link-underline-opacity-100-hover" 
-                                            data-bs-open="modal" 
-                                            data-bs-useclass="table-active"
-                                            href="?consulta=<?= base64_encode($row->cod_consulta) ?>&xml=0"
-                                        >
-                                            <i class="bi bi-file-earmark-fill"></i> <?=$row->tipo?>: <?=$row->cod_consulta?>
-                                        </a>                            
-                                    </small>
 
                                     <div class="d-flex flex-column">
-                                        <small class="fw-semibold text-muted">
-                                            • <?= $motivos[$row->justificar]?>
-                                        </small> 
+                                        <!-- <small class="fw-semibold text-muted">
+                                            • <?= $motivos[$row->reason]?>
+                                        </small> -->
+                                        <span class="">
+                                            <?= utf8_encode(@$row->description); ?>
+                                        </span> 
                                     </div>
                                 </div>
     
@@ -181,7 +162,7 @@
                     data-bs-content="Próximas"
                 >
                     <button type="submit" class="btn btn-light btn-sm"
-                        formaction="<?=$baseURL?>/pages/alterar_farol/historico.php?pagina=<?= $paginaAtual-1 ?>"
+                        formaction="<?=$baseURL?>/pages/realizar_chamado/historico.php?pagina=<?= $paginaAtual-1 ?>"
                         <?php if ($paginaAtual <= 1) echo 'disabled' ?>
                     >
                         <i class="bi bi-chevron-left"></i>
@@ -195,7 +176,7 @@
                     data-bs-content="Anteriores"
                 >
                     <button type="submit" class="btn btn-light btn-sm"
-                        formaction="<?=$baseURL?>/pages/alterar_farol/historico.php?pagina=<?= $paginaAtual+1 ?>"
+                        formaction="<?=$baseURL?>/pages/realizar_chamado/historico.php?pagina=<?= $paginaAtual+1 ?>"
                         <?php if ($paginaAtual >= $totalPaginas) echo 'disabled' ?>
                     >
                         <i class="bi bi-chevron-right"></i>

@@ -6,34 +6,14 @@
 
   require_once('../config.php');
   require_once('../classes/Database.class.php');
+  require_once('../classes/Users.class.php');
 
-
-
-// $Nome                = mb_convert_encoding(@$row->nome_fantasia?:'Não inf.', 'UTF-8', 'ISO-8859-1');
-// $codigo              = @$row->ID;
-// $Fantasia            = mb_convert_encoding(@$row->nome_fantasia?:'Não inf.', 'UTF-8', 'ISO-8859-1');
-// $documento           = @$row->cnpj?:'Não inf.';
-// $Cidade              = @$row->CIDADE?:'Não inf.';
-// $Bairro              = @$row->Bairro?:'Não inf.';
-// $Estado              = @$row->Uf?:'Não inf.';
-// $ddd                 = @$row->DDD?:'Não inf.';
-// $Telefones           = @$row->Fone?:'Não inf.';
-// $Telefones           = $ddd."&nbsp;&nbsp;".$Telefones;
-
-// $ddd1                 = @$row->ddd1?:'Não inf.';
-// $Telefones1           = @$row->telefone1?:'Não inf.';
-// $Telefones1          = $ddd1."&nbsp;&nbsp;".$Telefones1;
-
-// $celular1           = @$row->celular1?:'Não inf.';
-// $celular2           = @$row->celular2?:'Não inf.';
-// $Contato            = mb_convert_encoding(@$row->CONTATO?:'Não inf.', 'UTF-8', 'ISO-8859-1');
-// $email              = @$row->email?:'Não inf.';
-// $email2             = @$row->email2?:'Não inf.';
 
 $operador = @$_REQUEST['operador'];
 
 // buscar no banco.
 $db = new Database();
+$usersRepository = new Users();
 
 $response = new stdClass();
 
@@ -49,33 +29,30 @@ try {
 
   if (!$operador) throw new Exception('Operador não informado.');
 
-  $db->query = "SELECT * FROM credauto.atendentes WHERE CodAtendente = ?;";
-  $db->content = array([$operador, 'int']);
-
-  $operador = $db->selectOne();
+  $operador = $usersRepository->findById($operador);
 
   if (!$operador)  throw new Exception('Operador não encontrado.');
 
-  $operador->nome = @$operador->NomeNovoAtendente ?: @$operador->NomeAtendente;
+  $operador->nome = @$operador->nome;
 
   // Convertendo a data para o formato correto
-  $data_formatada = strftime('%e de %B de %Y',  strtotime($operador->Data));
+  $data_formatada = strftime('%e de %B de %Y',  strtotime($operador->created_at));
 
   // Formatação da hora
-  $hora_formatada = date('H:i', strtotime(trim($operador->Hora)));
+  $hora_formatada = date('H:i', strtotime(trim($operador->created_at)));
 
   $ultima_acesso_formatada = "$data_formatada às $hora_formatada";
 
   $sessao_contato = [];
 
-  if ( $operador->status =="1" ) { // BLOQUEIO AUTOMATICO
+  if ( @$operador->status =="1" ) { // BLOQUEIO AUTOMATICO
     $v_status = "SIM";
   } else {
     $v_status = "NAO";
   }
 
 
-  if ( $operador->Situacao !='2' ) {
+  if ( @$operador->Situacao !='2' ) {
     // quando 2 não existe. descontinuado ou algo assim.
   }
 
@@ -85,13 +62,13 @@ try {
     "icon" => 'bi bi-key-fill',
     "label" => 'Situação / Acesso',
     "item" => (
-      $operador->acesso == "0" ? 
+      @$operador->acesso != "0" ? 
         '<span class="fw-semibold text-success">Ativo</span>' : '<span class="fw-semibold text-danger">Inativo</span>' 
     )
   ];
  
   
-  if ($operador->horaentrada && $operador->horasaida) 
+  if (@$operador->horaentrada && @$operador->horasaida) 
   {
     // Horário de início e término
     $inicio = DateTime::createFromFormat('H:i:s', $operador->horaentrada);
@@ -140,9 +117,9 @@ try {
 
   // BLOQUEIO AUTOMATICO
   $sessao_contato[] = [ 
-    "icon" => $operador->status == "1" ? 'bi bi-lock-fill' : 'bi bi-unlock-fill',
+    "icon" => @$operador->status == "1" ? 'bi bi-lock-fill' : 'bi bi-unlock-fill',
     "label" => 'Bloqueio Automático',
-    "item" => $operador->status == "1" ? 'Sim': 'Não',
+    "item" => @$operador->status == "1" ? 'Sim': 'Não',
   ];
 
 
@@ -181,16 +158,15 @@ try {
         <div class="d-flex flex-row justify-content-between">
 
           <img class="bg-light rounded align-self-center me-3" 
-            src="<?= $operador->ImagemAtendente ?>" 
+            src="<?= $operador->image_url ?>" 
             data-srcset="<?= $baseURL ?>/profile_image.php?fullname=<?= ucwords($operador->nome) ?>" 
             onerror="defaultImage(this)" 
             alt="" width="60" height="60" 
-            <?php if(@$operador->acesso != "0") echo 'disabled' ?>
           />
           
           <div class="d-flex flex-column justify-content-center flex-grow-1">
             <h5 class="mb-0"><?= ucwords($operador->nome) ?></h5>
-            <small class="text-muted"><?= $operador->LoginAtendente ?></small>
+            <small class="text-muted"><?= $operador->email ?></small>
           </div>
 
         </div>
@@ -203,7 +179,7 @@ try {
           <button type="button" class="btn btn-sm btn-outline-secondary text-truncate flex-grow-1"
             data-bs-action="copy"
             data-bs-duration="900"
-            value="<?= "$baseURL/dashboard?user=$operador->CodAtendente" ?>"
+            value="<?= "$baseURL/dashboard?user=$operador->id" ?>"
             placeholder="Link Copiado!"
           >
             Copiar link para o perfil
@@ -212,7 +188,7 @@ try {
           <button type="button" class="btn btn-sm btn-outline-secondary text-truncate flex-grow-1"
             data-bs-action="copy"
             data-bs-duration="900"
-            value="<?= $operador->CodAtendente ?>"           
+            value="<?= $operador->id ?>"           
             placeholder="ID Copiado!"
           >
             Copiar ID do operador
@@ -274,10 +250,6 @@ try {
 
             <!-- <br>
 
-            <small class="text-muted">
-              ID do perfil: <?= $operador->CodAtendente ?>
-            </small> -->
-
 
         </div>
 
@@ -289,10 +261,3 @@ try {
     </div>
   <?php endif; ?>
   
-</div>
-
-<div class="modal-footer justify-content-center">
-  <small class="text-muted">
-    Dados referentes ao dia <?=$agora_formatada?>
-  </small>
-</div>

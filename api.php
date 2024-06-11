@@ -10,8 +10,10 @@
 
     require_once('./classes/JsonWebToken.class.php');
     require_once('./classes/Database.class.php');
+    require_once('./classes/Users.class.php');
 
     $db = new Database();
+    $usersRepository = new Users();
 
     $response = new stdClass();
 
@@ -38,33 +40,8 @@
 
 
             switch ($action) {
-                case 'remover_consulta':
-
-                    // $payload = JsonWebToken::decode($access_token);
-
-                    $consulta = @$body->consulta;
-                    $operador = @$body->operador;
-                    $justificativa = @$body->justificativa;
-                    $descricao = @$body->descricao;
-
-                    if (!$consulta) throw new Exception('Consulta não localizada.');
-                    if (!$operador) throw new Exception('ID do Atendente não localizado.');
-                    if (!$justificativa) throw new Exception('Justificativa não localizada.');
-                    if (!$descricao) throw new Exception('Descrição não localizada.');
-
-                    if (strlen($descricao) > 120) {
-                        throw new Exception("A descrição excede o tamanho máximo permitido de 120 caracteres.");
-                    }
-
-                    $response->session_id = session_id();
-    
-                    $response->success = true;
-                    break;
                 case 'listar-operadores':
-                    $db->query = "SELECT * FROM credauto.atendentes WHERE CodAtendente != 0 AND Situacao != 2 ORDER BY LoginAtendente";
-                    $db->content = array();
-
-                    if ($operadores = $db->select()) {
+                    if ($operadores = $usersRepository->findAll()) {
                         $response->operadores = $operadores;
                     } else {
                         throw new Exception("Não foi possível listar operadores.");

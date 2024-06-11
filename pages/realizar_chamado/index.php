@@ -2,14 +2,12 @@
 
     @include_once('../../config.php');
     @include_once('../../classes/Database.class.php');
-    @include_once('../../classes/Farol.class.php');
+    @include_once('../../classes/Tickets.class.php');
     
 	$db = new Database();
-	$farolClass = new Farol();
+	$ticketsRepository = new Tickets();
 
-	$motivos = $farolClass->motivos();
-
-	$farois = $farolClass->farois();
+	$motivos = $ticketsRepository->motivos();
 ?>
 
 <main id="realizar_chamado" class="d-flex flex-column flex-fill">
@@ -109,7 +107,7 @@
         </div>
         <div class="col-12 col-lg-5 p-3 ps-lg-0 h-lg-100" >
             
-            <?php require_once('./pages/alterar_farol/historico.php') ?>
+            <?php require_once('./pages/realizar_chamado/historico.php') ?>
                             
         </div>
     </div>

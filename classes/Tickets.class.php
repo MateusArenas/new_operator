@@ -9,6 +9,15 @@ class Tickets
         $this->db = new Database();
     }
 
+    
+    function motivos () {
+        $motivos = array();
+        $motivos[1] = 'Sistema fez a filtragem de forma incorreta.';
+        $motivos[2] = 'Farol Vermelho por informações erradas.';
+        $motivos[3] = 'Alterada informação de Óbito/Renajud.';
+        return $motivos;
+    }
+
     function create ($reason, $description, $channel_id, $user_id) {
         try {
             $this->db->query = "INSERT INTO tickets (reason, description, channel_id, user_id) VALUES (?, ?, ?, ?)";
@@ -41,10 +50,15 @@ class Tickets
 
     function findAll ($offset, $limit) {
         try {
-            $this->db->query = "SELECT * FROM tickets LIMIT ?, ?";
+            $this->db->query = "
+                SELECT tickets.*, users.*
+                FROM tickets
+                INNER JOIN users ON tickets.user_id = users.id
+                LIMIT ? OFFSET ?
+            ";
             $this->db->content = array();
-            $this->db->content[] = array($offset ?: 0, 'int');
             $this->db->content[] = array($limit ?: 1000, 'int');
+            $this->db->content[] = array($offset ?: 0, 'int');
            return $this->db->select();
         } catch (\Throwable $th) {
             //throw $th;
@@ -54,9 +68,9 @@ class Tickets
 
     function countAll () {
         try {
-            $this->db->query = "SELECT COUNT(*) as total FROM tickets";
+            $this->db->query = "SELECT * FROM tickets";
             $this->db->content = array();
-           return @$this->db->selectOne()->total ?: 0;
+           return $this->db->countAll();
         } catch (\Throwable $th) {
             //throw $th;
             return null;
