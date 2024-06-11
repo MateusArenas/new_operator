@@ -9,9 +9,9 @@
     error_reporting(1);
 
     // require_once('./classes/JsonWebToken.class.php');
-    require_once(__DIR__ . '/classes/Database.class.php');
-    require_once('./classes/Users.class.php');
-    require_once('./classes/Tickets.class.php');
+    require_once('Database.class.php');
+    require_once('Users.class.php');
+    require_once('Tickets.class.php');
 
     $db = new Database();
     $usersRepository = new Users();
