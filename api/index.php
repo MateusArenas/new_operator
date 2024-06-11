@@ -42,19 +42,11 @@
 
 
             switch ($action) {
-                case 'listar-operadores':
-                    if ($operadores = $Users->findAll()) {
-                        $response->operadores = $operadores;
-                    } else {
-                        throw new Exception("Não foi possível listar operadores.");
-                    }
-
-                    break;
                 case 'users':
                     if ($users = $Users->findAll()) {
                         $response->users = $users;
                     } else {
-                        throw new Exception("Não foi possível listar operadores.");
+                        throw new Exception("Não foi possível listar usuários.");
                     }
 
                     break;
@@ -64,7 +56,7 @@
 
                         $response->user = $user;
                     } else {
-                        throw new Exception("Não foi possível listar operadores.");
+                        throw new Exception("Não foi criar usuário.");
                     }
 
                     break;
@@ -72,6 +64,22 @@
                     if ($user = $Users->login($post->email, $post->password)) {
 
                         $response->user = $user;
+                    } else {
+                        throw new Exception("Não foi possível logar.");
+                    }
+
+                    break;
+                case 'logout':
+                    if ($Users->logout($post->user_id)) {
+                        $response->success = true;
+                    } else {
+                        throw new Exception("Não foi possível logar.");
+                    }
+
+                    break;
+                case 'listar-operadores':
+                    if ($operadores = $Users->findAll()) {
+                        $response->operadores = $operadores;
                     } else {
                         throw new Exception("Não foi possível listar operadores.");
                     }

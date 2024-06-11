@@ -6,42 +6,28 @@
          * @access private
          * @name $base
          */
-        private $host = '';
+        private $host = 'ep-solitary-lab-a4xsr6zv-pooler.us-east-1.aws.neon.tech';
 
         /**
          * Variável que contém o usuário do banco
          * @access private
          * @name $user
          */
-        private $user = '';
+        private $user = 'default';
 
         /**
          * Variável que contém a senha do banco
          * @access private
          * @name $passwordz
          */
-        private $password = '';
+        private $password = 'Nk9vMnhWdVNjR2ZQ';
 
         /**
          * Variável que contém nome do banco escolhido
          * @access public
          * @name $base
          */
-        public $base = '';
-
-                /**
-         * Variável que contém nome do banco escolhido
-         * @access public
-         * @name $base
-         */
-        public $port = '';
-
-                        /**
-         * Variável que contém nome do banco escolhido
-         * @access public
-         * @name $base
-         */
-        public $endpoint = '';
+        public $base = 'verceldb';
 
         /**
          * Variável que define o debug
@@ -95,13 +81,7 @@
         public function __construct($debug = true)
         {
             $this->debug = $debug;
-
-            $this->host = $_ENV['PG_HOST'];
-            $this->port = $_ENV['PG_PORT'];
-            $this->base = $_ENV['PG_DB'];
-            $this->user = $_ENV['PG_USER'];
-            $this->password = $_ENV['PG_PASSWORD'];
-            $this->endpoint = $_ENV['PG_ENDPOINT'];
+            $this->password = base64_decode($this->password);
         }
 
         /**
@@ -118,7 +98,7 @@
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_PERSISTENT => false
                 );
-                $conn = new PDO("pgsql:host={$this->host};port={$this->port};dbname={$this->base};sslmode=require;options='endpoint={$this->endpoint}'", $this->user, $this->password, $config);
+                $conn = new PDO("pgsql:host={$this->host};port=5432;dbname={$this->base};sslmode=require;options='endpoint=ep-solitary-lab-a4xsr6zv'", $this->user, $this->password, $config);
                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $this->instance = $conn;
             }
