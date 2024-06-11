@@ -52,10 +52,9 @@
               <select class="form-select form-select-sm" 
                   name="status"
                   required
-                  value="<?= $ticket->status ?>"
               >
                   <?php foreach($status as $value => $item): ?>
-                    <option value="<?=$value?>"><?="{$item}"?></option>
+                    <option value="<?=$value?>"  <?php if($ticket->status == $value) echo 'selected'; ?>   ><?="{$item}"?></option>
                   <?php endforeach; ?>
               </select>
               <label class="form-label">Status</label>
