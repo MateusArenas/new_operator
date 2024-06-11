@@ -179,7 +179,7 @@ $chamados = $ticketsRepository->findAll($offset, $itensPorPagina);
                                         style="color: unset;"
                                     >
                                         <img class="bg-light rounded"
-                                            alt="" width="28" height="28" 
+                                            alt="" width="28" height="28" O7mJWWTE1q newoperator.wuaze.com
                                             src="<?= $chamado->operator_image_url ?>" 
                                             data-srcset="<?=$baseURL?>/profile_image.php?fullname=<?= $chamado->operator_name ?>" 
                                             onerror="defaultImage(this)"

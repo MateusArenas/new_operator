@@ -33,7 +33,9 @@ if ($post->password !== $post->confirmpass) {
     die('Senha está diferente da Confirmação de senha.');
 }
 
-if ($user = $User->register($post->name, $post->email, $post->password, $post->type, $post->cpf)) {
+if ($user_id = $User->register($post->name, $post->email, $post->password, $post->type, $post->cpf)) {
+    $user = $User->findById($user_id);
+
     $_SESSION["MSLogin"] = $user->email;
     $_SESSION["MSNome"] = $user->nome;
     $_SESSION["MSId"] = $user->id;

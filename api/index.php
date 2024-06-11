@@ -1,66 +1,84 @@
 <?php 
-    function atualizaMensagem($channel_id, $mensagem, $timestamp)
-    {
-        $curl = curl_init();
+    date_default_timezone_set('America/Sao_Paulo');
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://slack.com/api/chat.update',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode( array(
-                    'channel' => $timestam,
-                    'ts' => $timestamp,
-                    'text' => $mensagem
-                )
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json; charset=utf-8',
-                'Authorization: Bearer xoxb-7251242262146-7264333439425-HUbQyKF6JYL8EKMkZBKPzMYo'
-            ),
-        ));
+    header('Access-Control-Allow-Origin: *');
+    header('Content-Type: application/json; charset=utf-8');
 
-        $response = curl_exec($curl);
-        curl_close($curl);
-        $response = json_decode($response);
-        return $response;
-    }
+    ini_set('display_errors', 1);
+    ini_set('display_startup_erros', 1);
+    error_reporting(1);
 
+    require_once('./classes/JsonWebToken.class.php');
+    require_once('./classes/Database.class.php');
+    require_once('./classes/Users.class.php');
+    require_once('./classes/Tickets.class.php');
 
-  // Verifique se há uma solicitação POST
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Decodifique o corpo da solicitação JSON
-    $payload = json_decode($_POST['payload']);
+    $db = new Database();
+    $usersRepository = new Users();
+    $ticketsRepository = new Tickets();
 
-    // Verifique se a ação é do tipo button e corresponde ao seu action_id
-    if ($payload->type === 'block_actions') {
-        foreach ($payload->actions as $action) {
-            if ($action->action_id === 'chamado-generico-verificando') {
-                // Ação de verificação clicada, faça algo aqui
-                // Por exemplo, atualize o status do chamado no seu sistema
-                $channel_id = $payload->channel->id; // ID do canal onde a mensagem foi postada
-                $user_id = $payload->user->id; // ID do usuário que clicou no botão
-                $message_ts = $payload->message->ts; // Timestamp da mensagem
-                // Faça algo com essas informações, como atualizar o status do chamado no seu sistema
+    $response = new stdClass();
 
-                // Altere o ícone para "olhinho" quando "Verificando" for clicado
-                $payload->message[1]->fields[2]->text = "*Status:*\n:eyes: Verificando";
+    $get = (object)$_GET;
+    $post = (object)$_POST;
+    $request = (object)$_REQUEST;
+    $server = (object)$_SERVER;
 
-                atualizaMensagem($payload->message, $message_ts);
+    $input = file_get_contents('php://input');
+    $body = json_decode($input);
 
-            } elseif ($action->action_id === 'chamado-generico-resolvido') {
-                // Ação de resolução clicada, faça algo aqui
-                // Altere o ícone para "checked" quando "Resolvido" for clicado
-                $payload->message[1]->fields[2]->text = "*Status:*\n:white_check_mark: Resolvido";
+    $http_token = @$server->HTTP_TOKEN;
+    $access_token = @$server->HTTP_AUTHORIZATION;
 
-                atualizaMensagem($payload->message, $message_ts);
+    $action = @$request->action;
+
+    try {
+        if ($http_token == '26d7c43e-504f-4bab-6777-8392fd4839ee') {
+
+            // midleware de auth
+            if (in_array($action, ['remover_consulta'])) {
+                $response->auth = true;
             }
-        }
-    }
-  }
 
+
+            switch ($action) {
+                case 'listar-operadores':
+                    if ($operadores = $usersRepository->findAll()) {
+                        $response->operadores = $operadores;
+                    } else {
+                        throw new Exception("Não foi possível listar operadores.");
+                    }
+
+                    break;
+                case 'sign-up':
+                    if ($user_id = $User->register($post->name, $post->email, $post->password, $post->type, $post->cpf)) {
+                        $user = $User->findById($user_id);
+
+                        $response->user = $user;
+                    } else {
+                        throw new Exception("Não foi possível listar operadores.");
+                    }
+
+                    break;
+                case 'sign-in':
+                    if ($user = $User->login($post->email, $post->password)) {
+
+                        $response->user = $user;
+                    } else {
+                        throw new Exception("Não foi possível listar operadores.");
+                    }
+
+                    break;
+                default:
+                    $response->warning = "Ação não configurada [{$action}]";
+                    break;
+            }
+        } else {
+            $response->warning = "Autorização de transação negada.";
+        }
+    } catch (\Exception $e) {
+        $response->error = $e->getMessage();
+    }
+
+    echo json_encode($response, JSON_PRETTY_PRINT);
 ?>

@@ -48,6 +48,16 @@
                     }
 
                     break;
+                case 'sign-in':
+                    if ($user_id = $User->register($post->name, $post->email, $post->password, $post->type, $post->cpf)) {
+                        $user = $User->findById($user_id);
+
+                        $response->user = $user;
+                    } else {
+                        throw new Exception("Não foi possível listar operadores.");
+                    }
+
+                    break;
                 default:
                     $response->warning = "Ação não configurada [{$action}]";
                     break;
