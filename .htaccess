@@ -3,6 +3,11 @@ Options +FollowSymLinks -MultiViews
     Header set Access-Control-Allow-Origin "*"
 </IfModule>
 
+<IfModule mod_php7.c>
+    php_value extension=pdo_pgsql
+    php_value extension=pgsql
+</IfModule>
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
     
