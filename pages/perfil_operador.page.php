@@ -121,7 +121,6 @@ try {
     $sessao_contato[] = [ 
       "icon" => 'bi bi-slack',
       "label" => 'Perfil do Slack',
-      "link" => "https://redecredautogroup.slack.com/team/$operador->slack_id",
       "item" => "$operador->slack_id <i class='bi bi-arrow-right-short before:-rotate-45'></i>",
     ];
   }
