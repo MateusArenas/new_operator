@@ -50,6 +50,14 @@
                     }
 
                     break;
+                case 'users':
+                    if ($users = $User->findAll()) {
+                        $response->users = $users;
+                    } else {
+                        throw new Exception("Não foi possível listar operadores.");
+                    }
+
+                    break;
                 case 'sign-up':
                     if ($user_id = $User->register($post->name, $post->email, $post->password, $post->type, $post->cpf)) {
                         $user = $User->findById($user_id);
