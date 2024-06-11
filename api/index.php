@@ -51,7 +51,7 @@
 
                     break;
                 case 'users':
-                    if ($users = $Usesr->findAll()) {
+                    if ($users = $Users->findAll()) {
                         $response->users = $users;
                     } else {
                         throw new Exception("Não foi possível listar operadores.");
