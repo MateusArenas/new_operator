@@ -120,9 +120,11 @@ class Tickets
 
     function countAll () {
         try {
-            $this->db->query = "SELECT * FROM tickets";
+            $this->db->query = "SELECT * FROM tickets LIMIT ?";
             $this->db->content = array();
-           return $this->db->countAll();
+            $this->db->content[] = array(1000, 'int');
+
+           return $this->db->countRows();
         } catch (\Throwable $th) {
             //throw $th;
             return null;
