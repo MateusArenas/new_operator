@@ -110,11 +110,16 @@ class Users
 
     function findById ($user_id) {
         try {
-           $response = $this->request(
-                $action = 'user', 
-                $body = array( "user_id" => $user_id )
-            );
-           return @$response->user ?: null;
+            $this->db->query = "SELECT * FROM users WHERE id = ?";
+            $this->db->content = array();
+            $this->db->content[] = array($user_id);
+           return $this->db->selectOne();
+
+        //    $response = $this->request(
+        //         $action = 'users', 
+        //         $body = array( "user_id" => $user_id )
+        //     );
+        //    return @$response->user ?: null;
         } catch (\Throwable $th) {
             //throw $th;
             return null;
