@@ -18,7 +18,7 @@
         /**
          * Variável que contém a senha do banco
          * @access private
-         * @name $password
+         * @name $passwordz
          */
         private $password = 'Nk9vMnhWdVNjR2ZQ';
 
