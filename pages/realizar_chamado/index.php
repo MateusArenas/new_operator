@@ -70,11 +70,11 @@
                     
                     <div class="card-footer">
                         <div class="row m-0 g-0">
-                            <div class="col-12 pt-2 pb-3 border-bottom">
+                            <!-- <div class="col-12 pt-2 pb-3 border-bottom">
                                 <small class="mb-2" role="alert">
                                     <i class="bi bi-exclamation-circle me-1"></i>Após a abertura do chamado, ele estará disponível tanto no <strong>histórico</strong> quanto no <strong>canal do Slack</strong>.
                                 </small>
-                            </div>
+                            </div> -->
                             <div class="col-12 pt-2">
                                 <button type="submit" class="btn btn-primary btn-sm float-end ">
                                     Abrir Chamado

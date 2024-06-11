@@ -6,5 +6,5 @@ if(strpos("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]", 'localhost') != fal
 } 
 else 
 {
-  $baseURL = 'https://painel.credoperador.com.br';
+  $baseURL = 'https://storedine.com';
 }

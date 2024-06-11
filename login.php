@@ -1,37 +1,6 @@
 <?php
     session_start();
 
-    include("acesso_login.php");
-
-    if(strpos("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]", 'localhost') != false)
-    {
-        $url = 'http://localhost/new_operator/dashboard.php';
-
-        if (!@$_REQUEST['base64']) $_GET['redirect'] = $url;
-        else $_GET['redirect'] = base64_encode($url);
-    } else {
-        $url = 'https://painel.credoperador.com.br/dashboard.php';
-
-        if (!@$_REQUEST['base64']) $_GET['redirect'] = $url;
-        else $_GET['redirect'] = base64_encode($url);
-    }
-
-    if(@$_REQUEST['base64'])
-    {
-        $redirect = urldecode(@$_GET['redirect']);
-        $redirect = base64_decode($redirect);
-    }
-    else
-    {
-        $redirect = urldecode(@$_GET['redirect']);
-    }
-
-    if(isset($_SESSION['MSLogin'])){ 
-        if($redirect) header("location:{$redirect}"); 
-        else header('location:dashboard.php?Pagina=RelatorioDiario'); 
-        exit; 
-    }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
