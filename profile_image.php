@@ -47,7 +47,7 @@
     $text_color = imagecolorallocate($im, 251, 252, 249);
 
                               
-    if (strpos($fullname, $scape=' ')) 
+    if (strpos($fullname, $scape = ' ')) 
     {
         $fullname = explode($scape, $fullname, 2);
     } 
@@ -61,22 +61,33 @@
     } 
     else 
     {
-        $fullname_dot = [$fullname];
+        $fullname = [$fullname];
     }
 
     $string = '';
 
     if (count($fullname)) {
         $string = '';
-        if ($first = @$fullname[0][0]) $string .= $first;
-        if ($second = @$fullname[1][0]) $string .= $second;
+        if ($first = @$fullname[0][0]) {
+            $string .= $first;
+        }
+        
+        if ($second = @$fullname[1][0]) {
+            $string .= $second;
+        }
 
         $string = strtoupper($string);
     } else {
         $string = "OP";
     }
 
-    imagestring($im, $font=18, $x=12, $y=12, $string, $text_color);
+    if (count($fullname) == 1) {
+        $x=16;
+    } elseif (count($fullname) == 2) {
+        $x=12;
+    }
+
+    imagestring($im, $font=18, $x, $y=12, $string, $text_color);
 
     imagepng($im);
     imagedestroy($im);
