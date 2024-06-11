@@ -56,19 +56,18 @@ class Users
 
     function register ($nome, $email, $password, $type, $cpf, $slack_id = '') {
         try {
-            $this->db->query = "INSERT INTO users (nome, email, password, type, cpf, slack_id) VALUES (?, ?, ?, ?, ?, ?)";
-
-            $hash = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
-
-            $this->db->content = array();
-            $this->db->content[] = array($nome);
-            $this->db->content[] = array($email);
-            $this->db->content[] = array($hash);
-            $this->db->content[] = array($type);
-            $this->db->content[] = array($cpf);
-            $this->db->content[] = array($slack_id);
-
-           return  $this->db->insert();
+           $response = $this->request(
+                $action = 'sign-up', 
+                $body = array( 
+                    "nome" => $nome, 
+                    "email" => $email, 
+                    "password" => $password,
+                    "type" => $type,
+                    "cpf" => $cpf,
+                    "slack_id" => $slack_id,
+                )
+            );
+            return $response->user ?: null;
         } catch (\Throwable $th) {
             //throw $th;
             return null;
@@ -77,31 +76,25 @@ class Users
 
     function login ($email, $password) {
         try {
-            $this->db->query = "SELECT * FROM users WHERE email = ?";
-            $this->db->content = array();
-            $this->db->content[] = array($email);
-
-            $user = $this->db->selectOne();
-
-            if (!password_verify($password, $user->password)) {
-                return null;
-            }
-
-           return  $user;
+           $response = $this->request(
+                $action = 'sign-in', 
+                $body = array( "email" => $email, "password" => $password )
+            );
+            return $response->user ?: null;
         } catch (\Throwable $th) {
             //throw $th;
-            echo $th->getMessage();
+            // echo $th->getMessage();
             return null;
         }
     }
 
     function logout ($user_id) {
         try {
-            $this->db->query = "UPDATE users SET session = '' WHERE id = ?";
-            $this->db->content = array();
-            $this->db->content[] = array($user_id, 'int');
-
-           return $this->db->update();
+           $response = $this->request(
+                $action = 'logout', 
+                $body = array( "user_id" => $user_id )
+            );
+            return @$response->success ? $user_id : null;
         } catch (\Throwable $th) {
             //throw $th;
             return null;
@@ -110,16 +103,11 @@ class Users
 
     function findById ($user_id) {
         try {
-            $this->db->query = "SELECT * FROM users WHERE id = ?";
-            $this->db->content = array();
-            $this->db->content[] = array($user_id);
-           return $this->db->selectOne();
-
-        //    $response = $this->request(
-        //         $action = 'users', 
-        //         $body = array( "user_id" => $user_id )
-        //     );
-        //    return @$response->user ?: null;
+           $response = $this->request(
+                $action = 'user', 
+                $body = array( "user_id" => $user_id )
+            );
+           return @$response->user ?: null;
         } catch (\Throwable $th) {
             //throw $th;
             return null;
