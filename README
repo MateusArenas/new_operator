@@ -1,4 +1,4 @@
-IR EM php.ini E HABILITAR AS SEGUINTES EXTENSÕES
+IR EM php.ini E HABILITAR AS SEGUINTES EXTENSÕES, APÓS ISSO RESTARTAR O APACHE
 
 extension=pdo_pgsql
 extension=pgsql
