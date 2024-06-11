@@ -1,0 +1,11 @@
+{
+  "name": "new_operator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/MateusArenas/new_operator.git",
+  "author": "Mateus Arenas <mateusarenas97@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": "18.x"
+  }
+}
