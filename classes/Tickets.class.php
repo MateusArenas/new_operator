@@ -10,13 +10,21 @@ class Tickets
     }
 
     
-    function motivos () {
+    function motivos() {
         $motivos = array();
-        $motivos[1] = 'Sistema fez a filtragem de forma incorreta.';
-        $motivos[2] = 'Farol Vermelho por informações erradas.';
-        $motivos[3] = 'Alterada informação de Óbito/Renajud.';
+        $motivos[1] = 'Erro de página não encontrada (404)';
+        $motivos[2] = 'Problema de autenticação ou login';
+        $motivos[3] = 'Erro de validação de formulário';
+        $motivos[4] = 'Problema de conexão com o banco de dados';
+        $motivos[5] = 'Erro de sintaxe ou semântica no código';
+        $motivos[6] = 'Funcionalidade não está respondendo conforme esperado';
+        $motivos[7] = 'Problema de exibição ou layout quebrado';
+        $motivos[8] = 'Erro de manipulação de dados (inserção, atualização ou exclusão)';
+        $motivos[9] = 'Desempenho lento ou tempo de resposta excessivo';
+        $motivos[10] = 'Erro de integração com sistemas externos';
         return $motivos;
     }
+    
 
     function create ($reason, $description, $channel_id, $user_id) {
         try {
