@@ -301,7 +301,7 @@
                     return new Promise((resolve, reject) => {
 
                       var settings = {
-                        "url": "<?= $baseURL ?>/api/listar-operadores",
+                        "url": "http://new-operator.vercel.app?action=listar-operadores",
                         "method": "GET",
                         "timeout": 0,
                         "headers": {
