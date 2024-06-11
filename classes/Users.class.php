@@ -16,6 +16,44 @@ class Users
         return $tipos;
     }
 
+    function request ($action, $body) {
+        try {
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "http://new-operator.vercel.app?action={$action}",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => json_encode($body),
+                CURLOPT_HTTPHEADER => array(
+                    'token: 26d7c43e-504f-4bab-6777-8392fd4839ee',
+                    'Content-Type: application/json'
+                ),
+            ));
+    
+            $response = curl_exec($curl);
+
+            // Verifica se ocorreu algum erro
+            if(curl_errno($curl)){
+                // Se ocorreu um erro, exibe a mensagem de erro
+                $message = curl_error($curl);
+                throw new Exception("Erro ao fazer a requisição: $message");
+            }
+    
+            curl_close($curl);
+
+            return json_decode($response, false);
+        } catch (\Throwable $th) {
+            // var_dump($th);
+            throw $th;
+        }
+    }
+
     function register ($nome, $email, $password, $type, $cpf, $slack_id = '') {
         try {
             $this->db->query = "INSERT INTO users (nome, email, password, type, cpf, slack_id) VALUES (?, ?, ?, ?, ?, ?)";
@@ -72,10 +110,11 @@ class Users
 
     function findById ($user_id) {
         try {
-            $this->db->query = "SELECT * FROM users WHERE id = ?";
-            $this->db->content = array();
-            $this->db->content[] = array($user_id);
-           return $this->db->selectOne();
+           $response = $this->request(
+                $action = 'user', 
+                $body = array( "user_id" => $user_id )
+            );
+           return @$response->user ?: null;
         } catch (\Throwable $th) {
             //throw $th;
             return null;
@@ -84,10 +123,8 @@ class Users
 
     function findAll () {
         try {
-            $this->db->query = "SELECT * FROM users LIMIT ?";
-            $this->db->content = array();
-            $this->db->content[] = array(1000, 'int');
-           return $this->db->select();
+            $response = $this->request($action = 'users', $body = array());
+            return @$response->users ?: null;
         } catch (\Throwable $th) {
             //throw $th;
             return null;
