@@ -54,7 +54,7 @@
 
                     break;
                 case 'user':
-                    if ($user = $Users->findById($request->user_id)) {
+                    if ($user = $Users->findById($body->user_id)) {
                         $response->user = $user;
                     } else {
                         throw new Exception("Não foi possível obter usuário.");
@@ -81,7 +81,7 @@
 
                     break;
                 case 'logout':
-                    if ($Users->logout($request->user_id)) {
+                    if ($Users->logout($body->user_id)) {
                         $response->success = true;
                     } else {
                         throw new Exception("Não foi possível logar.");
