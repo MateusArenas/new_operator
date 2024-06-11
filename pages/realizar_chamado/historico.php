@@ -95,13 +95,13 @@
     
                         <a class="mt-1 me-3"
                             data-bs-open="modal"
-                            href="?user=<?= $row->atendente ?>"
+                            href="?user=<?= $row->user_id ?>"
                             data-bs-modaltype="modal-fullscreen-md-down"
                         >
                             <img class="bg-light rounded"
                                 alt="" width="32" height="32" 
-                                src="<?= @$user->image_url ?>" 
-                                data-srcset="<?=$baseURL?>/profile_image.php?fullname=<?= ucwords($user->nome) ?>" 
+                                src="<?= @$row->user_image_url ?>" 
+                                data-srcset="<?=$baseURL?>/profile_image.php?fullname=<?= ucwords($row->user_name) ?>" 
                                 onerror="defaultImage(this)"
                             />
                         </a> 
@@ -113,20 +113,19 @@
                                     <span class="fw-semibold">
                                         <a class="fw-semibold link-underline-secondary link-underline-opacity-0 link-underline-opacity-100-hover"
                                             data-bs-open="modal"
-                                            href="?user=<?= $user->id ?>"
+                                            href="?user=<?= $row->user_id ?>"
                                             data-bs-modaltype="modal-fullscreen-md-down"
                                             style="color: unset;"
                                         >
-                                            <?= ucwords($user->nome) ?>
-                                        </a> abriu chamado de <strong><?=$motivos[$row->reason]?></strong>
-                                        <!-- <strong><?=strtoupper(@$row->tipo_parametro)?> <?=strtoupper(@$row->parametro)?></strong> -->
+                                            <?= ucwords($row->user_name) ?>
+                                        </a> abriu chamado de <strong><?=$row->title?></strong>
                                     </span>
 
 
                                     <div class="d-flex flex-column">
-                                        <!-- <small class="fw-semibold text-muted">
+                                        <small class="fw-semibold text-muted">
                                             • <?= $motivos[$row->reason]?>
-                                        </small> -->
+                                        </small>
                                         <span class="">
                                             <?= utf8_encode(@$row->description); ?>
                                         </span> 

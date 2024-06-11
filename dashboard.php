@@ -8,7 +8,12 @@
 
     // redireciona para rota inicial automaticamente (url amigável)
     if (!@$_GET['page']) { 
-      $_GET['page'] = "realizar_chamado";
+      if (@$_SESSION["MSPermission"] == 1) {
+        $_GET['page'] = "realizar_chamado";
+      } else {
+        $_GET['page'] = "chamados";
+      }
+
     }
 
     require_once('./classes/Helpers.class.php');
@@ -24,21 +29,30 @@
     $menus = [
       "painel_controle" => [
         "title" => 'Painel de Controle',
+        "hide" => @$_SESSION["MSPermission"] == 2,
         "submenus" => [
             "realizar_chamado" => [
               "title" => 'Abrir Chamado',
               "link" => $baseURL . '/dashboard/realizar_chamado',
+              "hide" => @$_SESSION["MSPermission"] == 2
             ]
         ]
       ],
 
       "atendentes" => [
         "title" => 'Painel Administrativo',
+        "hide" => @$_SESSION["MSPermission"] == 1,
         "submenus" => [
+            "chamados" => [
+              "title" => 'Lista de Chamados',
+              "link" => $baseURL . '/dashboard/chamados',
+              "hide" => @$_SESSION["MSPermission"] == 1,
+            ],
             "lista_atendentes" => [
               "title" => 'Lista de Atendentes',
               "link" => $baseURL . '/dashboard/lista_atendentes',
-            ]
+              "hide" => @$_SESSION["MSPermission"] == 1,
+            ],
         ]
       ],
 
@@ -139,7 +153,9 @@
 
         <ul class="nav p-3 navpro-nav nav-pills w-100 flex-column m-0 flex-fill flex-nowrap overflow-y-auto">
           
-          <?php foreach ($menus as $key => $item) : ?>
+          <?php foreach ($menus as $key => $item) : 
+              if (@$item['hide']) continue;
+          ?>
 
             <li class="mb-2 nav-item w-100 rounded <?php if ($activeted == $key) echo 'bg-body-tertiary'; ?>">
               <button class="btn btn-sm btn-toggle w-100 align-items-center rounded <?php if ($activeted == $key) echo 'active'; ?>" 
@@ -582,6 +598,9 @@
                   case 'realizar_chamado':
                       require_once('./pages/realizar_chamado/index.php');
                       break;
+                  case 'chamados':
+                    require_once('./pages/chamados/index.php');
+                    break;
                   // case 'consultas_veiculares':
                   //     require_once('./pages/consultas_veiculares.page.php');
                   //     break;

@@ -9,6 +9,14 @@ class Tickets
         $this->db = new Database();
     }
 
+    function status() {
+        $status = array();
+        $motivos[0] = 'AGUARDANDO';
+        $motivos[1] = 'EM ANDAMENTO';
+        $motivos[2] = 'CONCLUÍDO';
+        $motivos[3] = 'FORA DO PRAZO';
+        return $motivos;
+    }
     
     function motivos() {
         $motivos = array();
@@ -25,17 +33,37 @@ class Tickets
         $motivos[10] = 'Erro de integração com sistemas externos';
         return $motivos;
     }
-    
 
-    function create ($reason, $description, $channel_id, $user_id) {
+    function updateStatus ($ticket_id, $operator_id, $status) {
         try {
-            $this->db->query = "INSERT INTO tickets (reason, description, channel_id, user_id) VALUES (?, ?, ?, ?)";
+
+            $this->db->query = "UPDATE tickets SET status = ?, operator_id = ? WHERE id = ?";
 
             $this->db->content = array();
+            $this->db->content[] = array($status, 'int');
+            $this->db->content[] = array($operator_id, 'int');
+            $this->db->content[] = array($ticket_id, 'int');
+
+           return  $this->db->update();
+        } catch (\Throwable $th) {
+            //throw $th;
+            return null;
+        }
+    }
+    
+
+    function create ($title, $reason, $description, $channel_id, $user_id) {
+        try {
+            $this->db->query = "INSERT INTO tickets (title, reason, description, channel_id, user_id) 
+            VALUES (?, ?, ?, ?, ?)
+            ";
+
+            $this->db->content = array();
+            $this->db->content[] = array($title);
             $this->db->content[] = array($reason);
             $this->db->content[] = array($description);
             $this->db->content[] = array($channel_id);
-            $this->db->content[] = array($user_id);
+            $this->db->content[] = array($user_id, 'int');
 
            return  $this->db->insert();
         } catch (\Throwable $th) {
@@ -60,9 +88,24 @@ class Tickets
     function findAll ($offset, $limit) {
         try {
             $this->db->query = "
-                SELECT tickets.*, users.*
+                SELECT 
+                    tickets.*, 
+
+                    users.id AS user_id, 
+                    users.image_url AS user_image_url, 
+                    users.nome AS user_name, 
+                    users.type AS user_type, 
+                    users.email AS user_email, 
+
+                    operators.id AS operator_id, 
+                    operators.image_url AS operator_image_url, 
+                    operators.nome AS operator_name, 
+                    operators.type AS operator_type, 
+                    operators.email AS operator_email
+
                 FROM tickets
                 INNER JOIN users ON tickets.user_id = users.id
+                LEFT JOIN users AS operators ON tickets.operator_id = operators.id
                 LIMIT ? OFFSET ?
             ";
             $this->db->content = array();

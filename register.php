@@ -51,7 +51,7 @@
                     action="action-register.php" 
                 >
                     <div class="card-header text-center">
-                        <h3 class="fw-bold my-2"><i class="bi bi-gear-wide-connected"></i> Painel de Controle</h3>
+                        <h5 class="fw-bold my-2">Criar Conta</h5>
                         <!-- ACESSO -->
                     </div>
                     <div class="card-body d-flex flex-column p-5">
@@ -100,7 +100,7 @@
                         </div>
                         <div class="form-floating mb-3">
                             <input name="name" type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
-                                value="mateusarenas97@gmail.com"
+                                value="Mateus Arenas"
                             >
                             <label for="floatingInput">Nome:</label>
                         </div>
@@ -120,7 +120,7 @@
                                 <option value="<?=$value?>"><?="{$value} - {$item}"?></option>
                                 <?php endforeach; ?>
                             </select>
-                            <label class="form-label">Motivo</label>
+                            <label class="form-label">Tipo de Conta</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password"

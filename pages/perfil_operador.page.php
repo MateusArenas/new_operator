@@ -15,6 +15,8 @@ $operador = @$_REQUEST['operador'];
 $db = new Database();
 $usersRepository = new Users();
 
+$tipos = $usersRepository->tipos();
+
 $response = new stdClass();
 
 // Horário atual
@@ -56,6 +58,15 @@ try {
     // quando 2 não existe. descontinuado ou algo assim.
   }
 
+
+  // Tipo de Conta
+  $sessao_contato[] = [ 
+    "icon" => 'bi bi-person-fill',
+    "label" => 'Tipo de Usuário',
+    "item" => (
+        '<span class="fw-semibold">'.$tipos[$operador->type].'</span>'
+    )
+  ];
   
   // ACESSO
   $sessao_contato[] = [ 

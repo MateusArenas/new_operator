@@ -22,6 +22,7 @@ if ($user = $User->login($post->email, $post->password)) {
     $_SESSION["MSNome"] = $user->nome;
     $_SESSION["MSId"] = $user->id;
     $_SESSION["MSSlackId"] = $user->slack_id;
+    $_SESSION["MSPermission"] = $user->type;
 
         // caso a imagem esteje fora por algum motivo.
     if (!Helpers::existeImagem($user->image_url) and $user->slack_id) {

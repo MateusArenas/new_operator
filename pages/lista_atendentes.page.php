@@ -12,6 +12,7 @@ $db = new Database();
 $usersRepository = new Users();
 
 $atendentes = $usersRepository->findAll();
+$tipos = $usersRepository->tipos();
 
 ?>
 
@@ -42,7 +43,7 @@ $atendentes = $usersRepository->findAll();
 
                         <th class="input-group-sm" scope="col">
                             <div class="input-group-text text-start w-100 d-flex align-items-center position-relative">
-                                <small>Horáio de Trabalho</small>
+                                <small>Tipo</small>
                             </div>
                         </th>
 
@@ -140,7 +141,7 @@ $atendentes = $usersRepository->findAll();
                             <!-- Horáio de Trabalho -->
                             <td scope="row">
                                 <small class="fw-semibold text-nowrap">
-                                    <?= @$horario_trabalho ?>
+                                    <?= $tipos[$atendente->type] ?>
                                 </small>
                             </td>
 

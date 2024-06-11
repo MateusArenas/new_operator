@@ -44,7 +44,7 @@
                     action="action-login.php" 
                 >
                     <div class="card-header text-center">
-                        <h3 class="fw-bold my-2"><i class="bi bi-gear-wide-connected"></i> Painel de Controle</h3>
+                        <h5 class="fw-bold my-2">Login</h5>
                         <!-- ACESSO -->
                     </div>
                     <div class="card-body d-flex flex-column p-5">
@@ -96,6 +96,12 @@
                                 value="operador12345"
                             >
                             <label for="floatingPassword">Senha:</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <a href="register.php">
+                                Criar conta
+                            </a>
                         </div>
 
                         
