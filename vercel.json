@@ -8,7 +8,7 @@
     { "src": "/classes/Database.class.php", "dest": "/api/classes/Database.class.php" },
     { "src": "/classes/Tickets.class.php", "dest": "/api/classes/Tickets.class.php" },
     { "src": "/classes/Users.class.php", "dest": "/api/classes/Users.class.php" },
-    { "src": "/(.*)/(.*)", "dest": "/api/index.php?action=$1" }
+    { "src": "/(.*)", "dest": "/api/index.php" }
   ],
   "env": {
     "PG_HOST": "ep-solitary-lab-a4xsr6zv-pooler.us-east-1.aws.neon.tech",
