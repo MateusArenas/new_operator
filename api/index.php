@@ -1,7 +1,8 @@
 <?php
     session_start(); 
 
-    echo 'olá mundo';
+    header('content-type: application/json');
+echo json_encode(['time' => time(), 'date' => date('d.m.Y'), 'tech' => 'Vercel']);
     
     // if(@$_REQUEST['base64'])
     // {
