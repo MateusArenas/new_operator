@@ -1,3 +1,11 @@
+
+##NO AR
+
+link do painel: http://newoperator.wuaze.com/
+link da api: http://new-operator.vercel.app
+
+##LOCALMENTE
+
 IR EM php.ini E HABILITAR AS SEGUINTES EXTENSÕES, APÓS ISSO RESTARTAR O APACHE.
 
 extension=pdo_pgsql
