@@ -16,6 +16,6 @@
     "PG_DB": "verceldb",
     "PG_USER": "default",
     "PG_PASSWORD": "6Oo2xVuScGfP",
-    "PG_ENDPOINT": "ep-solitary-lab-a4xsr6zv-pooler"
+    "PG_ENDPOINT": "ep-solitary-lab-a4xsr6zv"
   }
 }
