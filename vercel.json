@@ -5,7 +5,7 @@
     }
   },
   "routes": [
-    { "src": "/(.*)", "dest": "/api/Database.class.php$1" },
+    { "src": "/Database.class.php", "dest": "/api/Database.class.php" },
     { "src": "/(.*)", "dest": "/api/index.php" }
   ]
 }
