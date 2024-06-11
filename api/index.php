@@ -115,7 +115,7 @@
 
                     break;
                 case 'tickets-count':
-                    if (($count = $Tickets->countAll() !== null)) {
+                    if (($count = $Tickets->countAll()) !== null) {
                         $response->count = $count;
                     } else {
                         throw new Exception("Não foi possivel obter tickets.");
