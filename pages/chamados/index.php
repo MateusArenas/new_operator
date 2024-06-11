@@ -174,7 +174,7 @@ $chamados = $ticketsRepository->findAll($offset, $itensPorPagina);
                                   <?php if (@$chamado->operator_id) : ?>
                                     <a class="d-flex align-items-center gap-2 link-underline-secondary link-underline-opacity-0 link-underline-opacity-100-hover"
                                         data-bs-open="modal"
-                                        href="?user=<?= $row->user_id ?>"
+                                        href="?user=<?= $chamado->operator_id ?>"
                                         data-bs-modaltype="modal-fullscreen-md-down"
                                         style="color: unset;"
                                     >
