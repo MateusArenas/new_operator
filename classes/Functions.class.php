@@ -3,7 +3,7 @@
 class Functions 
 {
     public $channel;
-    public $api_authorization = "Bearer xoxb-7251242262146-7264333439425-HUbQyKF6JYL8EKMkZBKPzMYo";
+    public $api_authorization = "Bearer ...";
 
     public function __construct()
     {
@@ -32,7 +32,7 @@ class Functions
             ),
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json; charset=utf-8',
-                'Authorization: Bearer xoxb-7251242262146-7264333439425-HUbQyKF6JYL8EKMkZBKPzMYo'
+                "Authorization: Bearer {$this->api_authorization}"
             ),
         ));
 
@@ -63,7 +63,7 @@ class Functions
             ),
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json; charset=utf-8',
-                'Authorization: Bearer xoxb-7251242262146-7264333439425-HUbQyKF6JYL8EKMkZBKPzMYo'
+                "Authorization: Bearer {$this->api_authorization}"
             ),
         ));
 
@@ -94,7 +94,7 @@ class Functions
             ),
             CURLOPT_HTTPHEADER => array(
                 "Content-Type: application/json",
-                "Authorization: Bearer $this->api_authorization"
+                "Authorization: Bearer {$this->api_authorization}"
             ),
         ));
         $data = curl_exec($curl);
@@ -125,7 +125,7 @@ class Functions
             ),
             CURLOPT_HTTPHEADER => array(
                 "Content-Type: application/json",
-                "Authorization: Bearer $this->api_authorization"
+                "Authorization: Bearer {$this->api_authorization}"
             ),
         ));
         $data = curl_exec($curl);
@@ -156,7 +156,7 @@ class Functions
             ),
             CURLOPT_HTTPHEADER => array(
                 "Content-Type: application/x-www-form-urlencoded",
-                "Authorization: Bearer $this->api_authorization"
+                "Authorization: Bearer {$this->api_authorization}"
             ),
         ));
         $data = curl_exec($curl);

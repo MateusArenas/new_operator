@@ -516,7 +516,7 @@
                     <img class="rounded"
                       alt="" width="30" height="30" 
                       src="<?= @$_SESSION["MSPerfilImagem"] ?>" 
-                      data-srcset="<?=$baseURL?>/profile_image.php?fullname=<?= @$_SESSION["MSLogin"] ?>" 
+                      data-srcset="<?=$baseURL?>/profile_image.php?fullname=<?= @$_SESSION["MSNome"] ?>" 
                       onerror="defaultImage(this)"
                     >
                     

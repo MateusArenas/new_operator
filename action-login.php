@@ -1,6 +1,7 @@
 <?php session_start();
 
 @include_once('./config.php');
+require('./classes/Helpers.class.php');
 require('./classes/Database.class.php');
 require('./classes/Users.class.php');
 require('./classes/Slack.class.php');

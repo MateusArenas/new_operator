@@ -9,7 +9,7 @@
 class Slack 
 {
     public $api_url = "https://slack.com/api";
-    public $api_authorization = "Bearer xoxb-7251242262146-7264333439425-HUbQyKF6JYL8EKMkZBKPzMYo";
+    public $api_authorization = "Bearer ...";
 
     function __construct()
     {
@@ -30,7 +30,7 @@ class Slack
               CURLOPT_CUSTOMREQUEST => 'GET',
               CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded',
-                "Authorization: $this->api_authorization"
+                "Authorization: Bearer {$this->api_authorization}"
               ),
             ));
             
