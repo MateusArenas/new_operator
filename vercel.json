@@ -9,5 +9,13 @@
     { "src": "/classes/Tickets.class.php", "dest": "/api/classes/Tickets.class.php" },
     { "src": "/classes/Users.class.php", "dest": "/api/classes/Users.class.php" },
     { "src": "/(.*)", "dest": "/api/index.php" }
-  ]
+  ],
+  "env": {
+    "PG_HOST": "ep-solitary-lab-a4xsr6zv-pooler.us-east-1.aws.neon.tech",
+    "PG_PORT": "5432",
+    "PG_DB": "verceldb",
+    "PG_USER": "default",
+    "PG_PASSWORD": "6Oo2xVuScGfP",
+    "PG_ENDPOINT": "ep-solitary-lab-a4xsr6zv-pooler"
+  }
 }
