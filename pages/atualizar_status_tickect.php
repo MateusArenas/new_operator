@@ -20,7 +20,7 @@
 
 <form
   data-form-type="ajax"
-  data-form-target="#realizar_chamado_message"
+  data-form-target="#atualizar_chamado_message"
   action="<?=$baseURL?>/action-update-ticket.php"
   method="post"
 >
@@ -39,7 +39,7 @@
     <div class="row">
       <input type="hidden" name="ticket_id" value="<?= $ticket_id ?>">
 
-      <div id="realizar_chamado_message" class="col-12"></div>
+      <div id="atualizar_chamado_message" class="col-12"></div>
 
       <div class="col-12">
 
