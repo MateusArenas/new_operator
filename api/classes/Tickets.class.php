@@ -121,11 +121,11 @@ class Tickets
 
     function countAll () {
         try {
-            $this->db->query = "SELECT * FROM tickets LIMIT ?";
+            $this->db->query = "SELECT COUNT(*) AS total FROM tickets LIMIT ?";
             $this->db->content = array();
             $this->db->content[] = array(1000, 'int');
 
-           return $this->db->countRows();
+           return intval(@$this->db->selectOne()->total ?: 0);
         } catch (\Throwable $th) {
             //throw $th;
             return null;
