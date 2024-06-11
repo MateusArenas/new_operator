@@ -128,31 +128,31 @@ try {
     if ($ticket = $ticketsRepository->create($title, $reason, $description, "C077SAM4XTK", $user->id)) {
         $response->success = "Chamado aberto.";
 
-        $titulo = $title;
+        // $titulo = $title;
 
-        // Destinatário
-        $para = "destinatario@example.com";
+        // // Destinatário
+        // $para = "destinatario@example.com";
 
-        // Assunto do e-mail
-        $assunto = "Novo Chamado: $titulo";
+        // // Assunto do e-mail
+        // $assunto = "Novo Chamado: $titulo";
 
-        // Cabeçalhos adicionais
-        $headers = "From: operadorchamados@gmail.com\r\n";
-        $headers .= "Reply-To: operadorchamados@gmail.com\r\n";
-        $headers .= "Content-Type: text/html\r\n";
+        // // Cabeçalhos adicionais
+        // $headers = "From: operadorchamados@gmail.com\r\n";
+        // $headers .= "Reply-To: operadorchamados@gmail.com\r\n";
+        // $headers .= "Content-Type: text/html\r\n";
 
-        // Corpo do e-mail
-        $corpo_email = "<h2>$titulo</h2><p>$description</p>";
+        // // Corpo do e-mail
+        // $corpo_email = "<h2>$titulo</h2><p>$description</p>";
 
-        $this->db->query = "SELECT * FROM users WHERE status = 2 LIMIT 1000";
-        $destinatarios = $this->select();
+        // $this->db->query = "SELECT * FROM users WHERE status = 2 LIMIT 1000";
+        // $destinatarios = $this->select();
 
-        foreach ($destinatarios as $para) {
-            // Enviar e-mail
-            if (mail($para, $assunto, $corpo_email, $headers)) {
-            } else {
-            }
-        }
+        // foreach ($destinatarios as $para) {
+        //     // Enviar e-mail
+        //     if (mail($para, $assunto, $corpo_email, $headers)) {
+        //     } else {
+        //     }
+        // }
 
     } else {
         throw new Exception('Não foi possivel abrir chamado.    ');

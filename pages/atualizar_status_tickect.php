@@ -19,10 +19,10 @@
 ?>
 
 <form
+  method="post"
   data-form-type="ajax"
   data-form-target="#atualizar_chamado_message"
   action="<?=$baseURL?>/action-update-ticket.php"
-  method="post"
 >
 <div class="modal-header align-items-start">
     <div class="d-flex">
