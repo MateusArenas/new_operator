@@ -301,8 +301,8 @@
                     return new Promise((resolve, reject) => {
 
                       var settings = {
-                        "url": "http://new-operator.vercel.app?action=listar-operadores",
-                        "method": "POST",
+                        "url": "https://new-operator.vercel.app?action=listar-operadores",
+                        "method": "GET",
                         "timeout": 0,
                         "headers": {
                           "token": "26d7c43e-504f-4bab-6777-8392fd4839ee",
