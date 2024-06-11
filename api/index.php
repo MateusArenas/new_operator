@@ -14,6 +14,9 @@
     require_once('classes/Tickets.class.php');
 
     $db = new Database();
+
+    $db->endpoint = '';
+
     $Users = new Users();
     $Tickets = new Tickets();
 

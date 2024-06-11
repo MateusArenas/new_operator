@@ -6,6 +6,13 @@
          * @access private
          * @name $base
          */
+        public $endpoint = 'ep-solitary-lab-a4xsr6zv';
+
+        /**
+         * Variável que contém o endereço do banco
+         * @access private
+         * @name $base
+         */
         private $host = 'ep-solitary-lab-a4xsr6zv-pooler.us-east-1.aws.neon.tech';
 
         /**
@@ -98,7 +105,7 @@
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_PERSISTENT => false
                 );
-                $conn = new PDO("pgsql:host={$this->host};port=5432;dbname={$this->base};sslmode=require;options='endpoint=ep-solitary-lab-a4xsr6zv'", $this->user, $this->password, $config);
+                $conn = new PDO("pgsql:host={$this->host};port=5432;dbname={$this->base};sslmode=require;options='endpoint={$this->endpoint}'", $this->user, $this->password, $config);
                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $this->instance = $conn;
             }
