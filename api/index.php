@@ -1,7 +1,9 @@
 <?php
-    session_start(); 
+header('content-type: application/json');
+// Configuração do cabeçalho Content-Disposition
+header('Content-Disposition: inline');
 
-    header('content-type: application/json');
+session_start(); 
 echo json_encode(['time' => time(), 'date' => date('d.m.Y'), 'tech' => 'Vercel']);
     
     // if(@$_REQUEST['base64'])
