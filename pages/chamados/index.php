@@ -20,7 +20,7 @@ $count = $ticketsRepository->countAll();
 $pagina = @$_GET['pagina'] ?? 1;
 
 // Total de itens
-$totalItens = @$count->total ?: 0;
+$totalItens = @$count ?: 0;
 
 // Itens por página
 $itensPorPagina = 10;
