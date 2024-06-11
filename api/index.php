@@ -27,7 +27,7 @@
     $input = file_get_contents('php://input');
     $body = json_decode($input);
 
-    $http_token = @$server->HTTP_TOKEN;
+    $http_token = @$server->HTTP_TOKEN ?: @$request->token;
     $access_token = @$server->HTTP_AUTHORIZATION;
 
     $action = @$request->action;
