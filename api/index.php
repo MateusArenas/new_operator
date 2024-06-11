@@ -14,8 +14,8 @@
     require_once('classes/Tickets.class.php');
 
     $db = new Database();
-    $usersRepository = new Users();
-    $ticketsRepository = new Tickets();
+    $Users = new Users();
+    $Tickets = new Tickets();
 
     $response = new stdClass();
 
@@ -43,7 +43,7 @@
 
             switch ($action) {
                 case 'listar-operadores':
-                    if ($operadores = $usersRepository->findAll()) {
+                    if ($operadores = $Users->findAll()) {
                         $response->operadores = $operadores;
                     } else {
                         throw new Exception("Não foi possível listar operadores.");
@@ -51,7 +51,7 @@
 
                     break;
                 case 'users':
-                    if ($users = $User->findAll()) {
+                    if ($users = $Usesr->findAll()) {
                         $response->users = $users;
                     } else {
                         throw new Exception("Não foi possível listar operadores.");
@@ -59,8 +59,8 @@
 
                     break;
                 case 'sign-up':
-                    if ($user_id = $User->register($post->name, $post->email, $post->password, $post->type, $post->cpf)) {
-                        $user = $User->findById($user_id);
+                    if ($user_id = $Users->register($post->name, $post->email, $post->password, $post->type, $post->cpf)) {
+                        $user = $Users->findById($user_id);
 
                         $response->user = $user;
                     } else {
@@ -69,7 +69,7 @@
 
                     break;
                 case 'sign-in':
-                    if ($user = $User->login($post->email, $post->password)) {
+                    if ($user = $Users->login($post->email, $post->password)) {
 
                         $response->user = $user;
                     } else {
