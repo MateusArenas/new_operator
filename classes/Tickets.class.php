@@ -49,11 +49,11 @@ class Tickets
 
     function status() {
         $status = array();
-        $motivos[0] = 'AGUARDANDO';
-        $motivos[1] = 'EM ANDAMENTO';
-        $motivos[2] = 'CONCLUÍDO';
-        $motivos[3] = 'FORA DO PRAZO';
-        return $motivos;
+        $status[0] = 'AGUARDANDO';
+        $status[1] = 'EM ANDAMENTO';
+        $status[2] = 'CONCLUÍDO';
+        $status[3] = 'FORA DO PRAZO';
+        return $status;
     }
     
     function motivos() {
@@ -74,15 +74,15 @@ class Tickets
 
     function updateStatus ($ticket_id, $operator_id, $status) {
         try {
-
-            $this->db->query = "UPDATE tickets SET status = ?, operator_id = ? WHERE id = ?";
-
-            $this->db->content = array();
-            $this->db->content[] = array($status, 'int');
-            $this->db->content[] = array($operator_id, 'int');
-            $this->db->content[] = array($ticket_id, 'int');
-
-           return  $this->db->update();
+           $response = $this->request(
+                $action = 'update-status-ticket', 
+                $body = array(
+                    "ticket_id" => $ticket_id,
+                    "operator_id" => $operator_id,
+                    "status" => $status,
+                )
+            );
+            return @$response->success ?: null;
         } catch (\Throwable $th) {
             //throw $th;
             return null;
