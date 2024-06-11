@@ -30,7 +30,7 @@ class Users
             $this->db->content[] = array($cpf);
             $this->db->content[] = array($slack_id);
 
-           return  $this->db->insert();
+           return  $this->db->insertId();
         } catch (\Throwable $th) {
             //throw $th;
             return null;

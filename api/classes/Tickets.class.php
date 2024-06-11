@@ -65,7 +65,7 @@ class Tickets
             $this->db->content[] = array($channel_id);
             $this->db->content[] = array($user_id, 'int');
 
-           return  $this->db->insert();
+           return  $this->db->insertId();
         } catch (\Throwable $th) {
             //throw $th;
             return null;
