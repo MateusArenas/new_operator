@@ -61,7 +61,7 @@ $tipos = $usersRepository->tipos();
 
                         <th class="input-group-sm" scope="col">
                             <div class="input-group-text text-start w-100 d-flex align-items-center position-relative">
-                                <small>Último Acesso</small>
+                                <small>Data de Criação</small>
                             </div>
                         </th>
 
@@ -86,10 +86,20 @@ $tipos = $usersRepository->tipos();
                         '<span class="fw-semibold text-success">Ativo</span>' 
                         : '<span class="fw-semibold text-danger">Inativo</span>'; 
                         
+                        $formato = 'Y-m-d H:i:s.u';
+                        // Criar um objeto DateTime com o fuso horário UTC
+                        $datetime = DateTime::createFromFormat($formato, $atendente->created_at, new DateTimeZone('UTC'));
+            
+                        // Definir o fuso horário para São Paulo (Brasil)
+                        $datetime->setTimezone(new DateTimeZone('America/Sao_Paulo'));
+            
+                        // Converter para string no formato desejado
+                        $created_at = $datetime->format($formato);
+
                         // Último acesso
-                        $data_formatada = strftime('%e de %B de %Y',  strtotime($atendente->created_at));
+                        $data_formatada = strftime('%e de %B de %Y',  strtotime($created_at));
                         // Formatação da hora
-                        $hora_formatada = date('H:i', strtotime(trim($atendente->created_at)));
+                        $hora_formatada = date('H:i', strtotime(trim($created_at)));
 
                         $ultima_acesso_formatada = "$data_formatada às $hora_formatada";
                         // fim

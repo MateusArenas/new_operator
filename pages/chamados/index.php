@@ -221,7 +221,7 @@ $chamados = $ticketsRepository->findAll($offset, $itensPorPagina);
 
                             <!-- DESCRICAO START -->
                             <td scope="row">
-                                <span class="badge badge-sm bg-light">
+                                <span class="badge badge-sm bg-light text-truncate" style="max-width: 12em;">
                                     <?= $chamado->description ?>
                                 </span>
                             </td>
@@ -260,7 +260,21 @@ $chamados = $ticketsRepository->findAll($offset, $itensPorPagina);
                             <td scope="row">
 
                                 <span class="badge badge-sm bg-light">
-                                    <?= date('d/m/Y - H:i:s', strtotime($chamado->created_at)) ?>
+                                    <?php 
+                                        $formato = 'Y-m-d H:i:s.u';
+
+                                        // Criar um objeto DateTime com o fuso horário UTC
+                                        $datetime = DateTime::createFromFormat($formato, $chamado->created_at, new DateTimeZone('UTC'));
+
+                                        // Definir o fuso horário para São Paulo (Brasil)
+                                        $datetime->setTimezone(new DateTimeZone('America/Sao_Paulo'));
+
+                                        // Converter para string no formato desejado
+                                        $created_at = $datetime->format($formato);
+                                        
+                                        echo date('d/m/Y - H:i:s', strtotime($created_at));
+                                    
+                                    ?>
                                 </span>
 
                             </td>
@@ -271,7 +285,21 @@ $chamados = $ticketsRepository->findAll($offset, $itensPorPagina);
 
                                 <?php if($chamado->updated_at): ?>
                                     <span class="badge badge-sm <?= $chamado->status == 3 ? 'bg-danger-subtle text-danger' : 'bg-light' ?>" >
-                                        <?= date('d/m/Y - H:i:s', strtotime($chamado->updated_at)) ?>
+                                        <?php
+                                            $formato = 'Y-m-d H:i:s.u';
+
+                                            // Criar um objeto DateTime com o fuso horário UTC
+                                            $datetime = DateTime::createFromFormat($formato, $chamado->updated_at, new DateTimeZone('UTC'));
+
+                                            // Definir o fuso horário para São Paulo (Brasil)
+                                            $datetime->setTimezone(new DateTimeZone('America/Sao_Paulo'));
+
+                                            // Converter para string no formato desejado
+                                            $updated_at = $datetime->format($formato);
+                                            
+                                            echo date('d/m/Y - H:i:s', strtotime($updated_at));
+                                        
+                                        ?>
                                     </span>
                                 <?php endif; ?>
 

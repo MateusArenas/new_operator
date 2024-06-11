@@ -140,6 +140,16 @@ class Helpers
 
     public static function formatarDataEscrita ($data) { // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam condimentum."
         try {
+            $formato = 'Y-m-d H:i:s.u';
+            // Criar um objeto DateTime com o fuso horário UTC
+            $datetime = DateTime::createFromFormat($formato, $data, new DateTimeZone('UTC'));
+
+            // Definir o fuso horário para São Paulo (Brasil)
+            $datetime->setTimezone(new DateTimeZone('America/Sao_Paulo'));
+
+            // Converter para string no formato desejado
+            $data = $datetime->format($formato);
+
             $formatada = date('d/m à\s H:i', strtotime($data));
             $formatada = str_replace('/01',' de Janeiro', $formatada);
             $formatada = str_replace('/02',' de Fevereiro', $formatada);

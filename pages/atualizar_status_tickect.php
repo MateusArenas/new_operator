@@ -42,6 +42,12 @@
       <div id="realizar_chamado_message" class="col-12"></div>
 
       <div class="col-12">
+
+          <div class="form-floating mb-3">
+            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="min-height: 100px" disabled readonly><?= $ticket->description ?></textarea>
+            <label for="floatingTextarea2">Descrição</label>
+          </div>
+
           <div class="form-floating mb-3">
               <select class="form-select form-select-sm" 
                   name="status"

@@ -106,6 +106,7 @@ class Tickets
                 FROM tickets
                 INNER JOIN users ON tickets.user_id = users.id
                 LEFT JOIN users AS operators ON tickets.operator_id = operators.id
+                ORDER BY id DESC
                 LIMIT ? OFFSET ?
             ";
             $this->db->content = array();

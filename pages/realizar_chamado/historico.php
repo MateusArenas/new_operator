@@ -1,5 +1,10 @@
 <?php @session_start();
 
+    @date_default_timezone_set('America/Sao_Paulo');
+    @header("Access-Control-Allow-Origin: *");
+    @setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'portuguese');
+
+
     // essa maneira de incluir, inclui de qualquer forma.
     @include_once('../../config.php');
     @include_once('../../classes/Helpers.class.php');

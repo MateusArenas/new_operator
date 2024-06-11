@@ -37,11 +37,21 @@ try {
 
   $operador->nome = @$operador->nome;
 
+  $formato = 'Y-m-d H:i:s.u';
+  // Criar um objeto DateTime com o fuso horário UTC
+  $datetime = DateTime::createFromFormat($formato, $operador->created_at, new DateTimeZone('UTC'));
+
+  // Definir o fuso horário para São Paulo (Brasil)
+  $datetime->setTimezone(new DateTimeZone('America/Sao_Paulo'));
+
+  // Converter para string no formato desejado
+  $created_at = $datetime->format($formato);
+
   // Convertendo a data para o formato correto
-  $data_formatada = strftime('%e de %B de %Y',  strtotime($operador->created_at));
+  $data_formatada = strftime('%e de %B de %Y',  strtotime($created_at));
 
   // Formatação da hora
-  $hora_formatada = date('H:i', strtotime(trim($operador->created_at)));
+  $hora_formatada = date('H:i', strtotime(trim($created_at)));
 
   $ultima_acesso_formatada = "$data_formatada às $hora_formatada";
 
@@ -118,7 +128,7 @@ try {
 
   if ($operador->slack_id) 
   {
-    $sessao_contato[] = [ 
+    $sessao_contato[] = [
       "icon" => 'bi bi-slack',
       "label" => 'Perfil do Slack',
       "item" => "$operador->slack_id <i class='bi bi-arrow-right-short before:-rotate-45'></i>",
@@ -135,7 +145,7 @@ try {
 
   $sessao_contato[] = [ 
     "icon" => 'bi bi-door-open-fill',
-    "label" => 'Último acesso',
+    "label" => 'Data de Criação',
     "item" => "Dia $ultima_acesso_formatada",
   ];
 
