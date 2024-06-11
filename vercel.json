@@ -5,9 +5,9 @@
     }
   },
   "routes": [
-    { "src": "/classes/Database.class.php", "dest": "/classes/Database.class.php" },
-    { "src": "/classes/Tickets.class.php", "dest": "/classes/Tickets.class.php" },
-    { "src": "/classes/Users.class.php", "dest": "./classes/Users.class.php" },
+    { "src": "/classes/Database.class.php", "dest": "/api/classes/Database.class.php" },
+    { "src": "/classes/Tickets.class.php", "dest": "/api/classes/Tickets.class.php" },
+    { "src": "/classes/Users.class.php", "dest": "/api/classes/Users.class.php" },
     { "src": "/(.*)", "dest": "/api/index.php" }
   ],
   "env": {

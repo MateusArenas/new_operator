@@ -10,7 +10,7 @@
 
     // require_once('classes/JsonWebToken.class.php');
     require_once('classes/Database.class.php');
-    require_once('../classes/Users.class.php');
+    require_once('classes/Users.class.php');
     require_once('classes/Tickets.class.php');
 
     $db = new Database();
