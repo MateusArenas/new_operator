@@ -1,0 +1,4 @@
+IR EM php.ini E HABILITAR AS SEGUINTES EXTENSÕES
+
+extension=pdo_pgsql
+extension=pgsql
