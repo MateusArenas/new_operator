@@ -18,7 +18,11 @@ $db = new Database();
 $ticketsRepository = new Tickets();
 
 $ticket_id = @$_REQUEST['ticket_id'] or die('Ticket id não localizado.');
-$status = @$_REQUEST['status'] or die('status não localizado.');
+$status = @$_REQUEST['status']; 
+
+if ($status === null) {
+    die('status não localizado.');
+}
 
 $response = new stdClass();
 

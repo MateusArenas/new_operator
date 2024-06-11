@@ -18,12 +18,7 @@
   $status = $ticketsRepository->status();
 ?>
 
-<form
-  method="post"
-  data-form-type="ajax"
-  data-form-target="#atualizar_chamado_message"
-  action="<?=$baseURL?>/action-update-ticket.php"
->
+
 <div class="modal-header align-items-start">
     <div class="d-flex">
         <div class="d-flex flex-column">
@@ -35,7 +30,13 @@
     <button type="button" class="btn-close m-1" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 
-<div class="modal-body">
+<form class="modal-body"
+method="post"
+  data-form-type="ajax"
+  data-form-target="#atualizar_chamado_message"
+  action="<?=$baseURL?>/action-update-ticket.php"
+
+>
     <div class="row">
       <input type="hidden" name="ticket_id" value="<?= $ticket_id ?>">
 
@@ -60,20 +61,17 @@
           </div>
       </div>
     </div>
-</div>
-
-  <div class="modal-footer  justify-content-between">
-      
-      <div class="d-flex flex-row">
-      
-          <button class="btn btn-primary" 
-              type="submit"
-          >
-              Atualizar Chamado
-          </button>
-      </div>
-  </div>
-
-
-
+    <div class="d-flex flex-row align-items-center justify-content-end">
+  
+      <button class="btn btn-primary float-end" 
+          type="submit"
+      >
+          Salvar Alterações
+      </button>
+    </div>
 </form>
+
+
+
+
+
