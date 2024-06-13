@@ -54,7 +54,7 @@
                         $response->body = $body;
 
                         if (@$body->email) {
-                            $response->message = "Olá {$body->email}, tudo bem? \n Ótima escolha de senha.";
+                            $response->message = "Olá {$body->email}, tudo bem? Ótima escolha de senha.";
                         } else {
                             $response->message = "Olá mundo!";
                         }
