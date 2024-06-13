@@ -2,6 +2,8 @@
     date_default_timezone_set('America/Sao_Paulo');
 
     header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+    header('Access-Control-Allow-Headers: *');
     header('Content-Type: application/json; charset=utf-8');
 
     ini_set('display_errors', 1);

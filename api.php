@@ -25,7 +25,7 @@
     $input = file_get_contents('php://input');
     $body = json_decode($input);
 
-    $http_token = @$server->HTTP_TOKEN;
+    $http_token = @$server->HTTP_TOKEN ?: @$request->token;
     $access_token = @$server->HTTP_AUTHORIZATION;
 
     $action = @$request->action;
@@ -40,6 +40,12 @@
 
 
             switch ($action) {
+                case 'teste':
+                    $response->post = $post;
+                    $response->get = $get;
+                    $response->request = $request;
+                    $response->body = $body;
+                break;
                 case 'listar-operadores':
                     if ($operadores = $usersRepository->findAll()) {
                         $response->operadores = $operadores;
