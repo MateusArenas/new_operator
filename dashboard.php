@@ -8,6 +8,7 @@
 
     // redireciona para rota inicial automaticamente (url amigável)
     if (!@$_GET['page']) { 
+      
       if (@$_SESSION["MSPermission"] == 1) {
         $_GET['page'] = "realizar_chamado";
       } else {

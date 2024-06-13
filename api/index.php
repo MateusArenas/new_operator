@@ -45,6 +45,12 @@
 
 
             switch ($action) {
+                case 'teste':
+                        $response->post = $post;
+                        $response->get = $get;
+                        $response->request = $request;
+                        $response->body = $body;
+                    break;
                 case 'users':
                     if ($users = $Users->findAll()) {
                         $response->users = $users;

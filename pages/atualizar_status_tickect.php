@@ -31,11 +31,10 @@
 </div>
 
 <form class="modal-body"
-method="post"
+  method="post"
   data-form-type="ajax"
   data-form-target="#atualizar_chamado_message"
   action="<?=$baseURL?>/action-update-ticket.php"
-
 >
     <div class="row">
       <input type="hidden" name="ticket_id" value="<?= $ticket_id ?>">
