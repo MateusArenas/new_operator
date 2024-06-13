@@ -53,7 +53,11 @@
                         $response->request = $request;
                         $response->body = $body;
 
-                        $response->message = "Olá mundo!";
+                        if (@$body->email) {
+                            $response->message = "Olá {$body->email}, tudo bem? \n Ótima escolha de senha.";
+                        } else {
+                            $response->message = "Olá mundo!";
+                        }
                     break;
                 case 'users':
                     if ($users = $Users->findAll()) {
