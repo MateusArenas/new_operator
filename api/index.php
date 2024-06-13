@@ -52,6 +52,8 @@
                         $response->get = $get;
                         $response->request = $request;
                         $response->body = $body;
+
+                        $response->message = "Olá mundo!";
                     break;
                 case 'users':
                     if ($users = $Users->findAll()) {
