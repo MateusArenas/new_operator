@@ -53,6 +53,12 @@
                         $response->request = $request;
                         $response->body = $body;
 
+                        $response->estados = [
+                            [ "label" => "São Paulo", "value" => "SP" ],
+                            [ "label" => "Santa Catarina", "value" => "SC" ],
+                            [ "label" => "Minas Gerais", "value" => "MG" ],
+                        ];
+
                         if (@$body->email) {
                             $response->message = "Olá {$body->email}, tudo bem? Ótima escolha de senha.";
                         } else {
