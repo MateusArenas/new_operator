@@ -52,12 +52,51 @@
                         $response->get = $get;
                         $response->request = $request;
                         $response->body = $body;
-
+                        
                         $response->estados = [
-                            [ "label" => "São Paulo", "value" => "SP" ],
-                            [ "label" => "Santa Catarina", "value" => "SC" ],
+                            [ "label" => "Acre", "value" => "AC" ],
+                            [ "label" => "Alagoas", "value" => "AL" ],
+                            [ "label" => "Amapá", "value" => "AP" ],
+                            [ "label" => "Amazonas", "value" => "AM" ],
+                            [ "label" => "Bahia", "value" => "BA" ],
+                            [ "label" => "Ceará", "value" => "CE" ],
+                            [ "label" => "Distrito Federal", "value" => "DF" ],
+                            [ "label" => "Espírito Santo", "value" => "ES" ],
+                            [ "label" => "Goiás", "value" => "GO" ],
+                            [ "label" => "Maranhão", "value" => "MA" ],
+                            [ "label" => "Mato Grosso", "value" => "MT" ],
+                            [ "label" => "Mato Grosso do Sul", "value" => "MS" ],
                             [ "label" => "Minas Gerais", "value" => "MG" ],
-                        ];
+                            [ "label" => "Pará", "value" => "PA" ],
+                            [ "label" => "Paraíba", "value" => "PB" ],
+                            [ "label" => "Paraná", "value" => "PR" ],
+                            [ "label" => "Pernambuco", "value" => "PE" ],
+                            [ "label" => "Piauí", "value" => "PI" ],
+                            [ "label" => "Rio de Janeiro", "value" => "RJ" ],
+                            [ "label" => "Rio Grande do Norte", "value" => "RN" ],
+                            [ "label" => "Rio Grande do Sul", "value" => "RS" ],
+                            [ "label" => "Rondônia", "value" => "RO" ],
+                            [ "label" => "Roraima", "value" => "RR" ],
+                            [ "label" => "Santa Catarina", "value" => "SC" ],
+                            [ "label" => "São Paulo", "value" => "SP" ],
+                            [ "label" => "Sergipe", "value" => "SE" ],
+                            [ "label" => "Tocantins", "value" => "TO" ],
+                        ];       
+
+                        $itemsPerPage = 5;
+                        $totalItems = count($response->estados);
+                        $currentPage = $body->page ?: 1;
+
+                        // Calcula o offset e não deixa passar de menos zero
+                        $offset = max(0, ($currentPage - 1) * $itemsPerPage);
+
+                        $response->estados = array_slice($response->estados, $offset, $itemsPerPage)
+
+                        // Calcula o total de páginas
+                        $totalPages = ceil($totalItems / $itemsPerPage);
+
+                        $response->totalPages = $totalPages;
+                        $response->totalItems = $totalItems;
 
                         if (@$body->email) {
                             $response->message = "Olá {$body->email}, tudo bem? Ótima escolha de senha.";
