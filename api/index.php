@@ -90,7 +90,7 @@
                         // Calcula o offset e não deixa passar de menos zero
                         $offset = max(0, ($currentPage - 1) * $itemsPerPage);
 
-                        $response->estados = array_slice($response->estados, $offset, $itemsPerPage)
+                        $response->estados = array_slice($response->estados, $offset, $itemsPerPage);
 
                         // Calcula o total de páginas
                         $totalPages = ceil($totalItems / $itemsPerPage);
