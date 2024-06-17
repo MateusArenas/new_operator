@@ -85,7 +85,7 @@
 
                         $itemsPerPage = 5;
                         $totalItems = count($response->estados);
-                        $currentPage = @$body->page ?: 1;
+                        $currentPage = @$get->page ?: 1;
 
                         // Calcula o offset e não deixa passar de menos zero
                         $offset = max(0, ($currentPage - 1) * $itemsPerPage);
